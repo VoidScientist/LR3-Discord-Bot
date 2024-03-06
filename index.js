@@ -44,3 +44,18 @@ function typingEnd(message) {
 
 client.on('typingStart', onTyping)
 client.on("messageCreate", typingEnd)
+
+//  Function that bothers users if they type after 11pm // 
+
+client.on(Events.MessageCreate, (message) => {
+    if (message.author.id === self) {return;}
+    message.react(":pain:");
+    message.channel.send(`I can see you saying your '${message.content}' shit opinion.`);
+    if (message.createdAt.getHours() > limitHour){
+
+        message.channel.send(`So you awake at ${message.createdAt.getHours()} ? Go to sleep ${message.author.username} ! `)
+        
+    }
+    
+})
+
