@@ -5,6 +5,7 @@ const Commands = {
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
+    "sis" : getHotChick,
     "konami": getKonami
 
 };
@@ -45,14 +46,19 @@ function getCrackhead(){
 
 }
 
-function getKonami(){
+function getHotChick(){
 
-    // TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
-
-    return "Thou hast successfully transcended the realm of humanity.";
+    return "https://media.licdn.com/dms/image/D4E03AQEOfGLK6QLPMw/profile-displayphoto-shrink_100_100/0/1696966619616?e=1715212800&v=beta&t=msuJjcpLUojZRgvV-i3hk-CYP_wDO3tR2s1Ly7aalgU"
 
 }
 
+function getKonami() {
+
+// TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
+
+return "Thou hast successfully transcended the realm of humanity.";
+
+}
 
 export default Commands;
 
