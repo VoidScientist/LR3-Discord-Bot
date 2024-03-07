@@ -3,7 +3,9 @@ import UtilFuncs from "./UtilFuncs.js";
 const Commands = {
     
     "cat" : getCatUrl,
-    "dog" : getDogImage
+    "dog" : getDogImage,
+    "crackhead" : getCrackhead
+
 
 };
 
@@ -30,6 +32,12 @@ async function getDogImage(message) {
     if (dogs.status === "success") {
         return dogs.message
     }
+}
+
+function getCrackhead(){
+
+    return "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU"
+
 }
 
 
