@@ -9,7 +9,7 @@ const Commands = {
 
 function getCatUrl(content){
 
-    if (content.length > 1){
+    if (content.length > 1) {
 
         let text = UtilFuncs.conv.arrayToUrl(content);
 

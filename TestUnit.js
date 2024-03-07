@@ -44,11 +44,30 @@ const tests = [
         parameter: ["Bonjour"],
         expected: "Bonjour"
     },
+
     {
-        func: Commands["cat"],
+        func: Commands.cat,
         parameter: ["hello", "world"],
         expected: `https://cataas.com/cat/says/hello%20world?fontColor=white&fontSize=50`
-    }
+    },
+
+    {
+        func: Commands.cat,
+        parameter: [],
+        expected: `https://cataas.com/cat`
+    },
+
+    {
+        func: Commands.cat,
+        parameter: undefined,
+        expected: `https://cataas.com/cat`
+    },
+
+    {
+        func: Commands.cat,
+        parameter: null,
+        expected: `https://cataas.com/cat`
+    },
 
 ];
 
