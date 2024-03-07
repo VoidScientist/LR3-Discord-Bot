@@ -3,83 +3,98 @@ import Commands from "./Commands.js";
 
 const tests = [
 
+    // 1
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {userName: "BobTheBuilder", password:"IHATEBUILDING"},
         expected: "userName=BobTheBuilder&password=IHATEBUILDING"
     },
 
+    // 2 
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {userName:"Mickey Mouse", password:"Minnie is mid"},
         expected: "userName=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
+    // 3
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {"user Name":"Mickey Mouse", "password":"Minnie is mid"},
         expected: "user%20Name=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
+    // 4
     {
         func: UtilFuncs.conv.strToUrl,
         parameter: "BE NOT AFRAID",
         expected: "BE%20NOT%20AFRAID"
     },
 
+    // 5
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: ["Raph","Connait","Pas","Ses","Returns"],
         expected: "Raph%20Connait%20Pas%20Ses%20Returns"
     },
 
+    // 6
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: [],
         expected: ""
     },
 
+    // 7
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: ["Bonjour"],
         expected: "Bonjour"
     },
+
+    // 8 
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: [" "],
         expected: "%20"
     },
 
+    // 9
     {
         func: Commands.cat,
         parameter: ["hello", "world"],
         expected: `https://cataas.com/cat/says/hello%20world?fontColor=white&fontSize=50`
     },
 
+    // 10
     {
         func: Commands.cat,
         parameter: [],
         expected: `https://cataas.com/cat`
     },
 
+    // 11
     {
         func: Commands.cat,
         parameter: ["Bonjour"],
         expected: `https://cataas.com/cat/says/Bonjour?fontColor=white&fontSize=50`
     },
 
+    // 12
     {
         func: Commands.cat,
         parameter: [" "],
         expected: `https://cataas.com/cat/says/%20?fontColor=white&fontSize=50`
     },
 
+    // 13
     {
         func: Commands.cat,
         parameter: undefined,
         expected: `https://cataas.com/cat`
     },
 
+    // 14
     {
         func: Commands.cat,
         parameter: null,
