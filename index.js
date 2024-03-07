@@ -17,35 +17,35 @@ const client = new Client(
 
 client.login(CONFIG.token);
 
-client.once(Events.ClientReady, client => 
-    {
-        console.log("Bot is ready!");
-        self = client.user.id;
-        client.user.setPresence(
-            {
-                activities: [{name: "🤖 AM AWAKE 🤖", type: ActivityType.Custom}],
-                status: "online"
-            }
-        );
-    }
-);
+function onClientReady(client) {
 
-client.on(Events.MessageCreate, (message) => 
+    console.log("Bot is ready!");
 
-    {
+    self = client.user.id;
 
-        if (message.content[0] !== "!") {return;}
-        
-        let parsed = message.content.split(" ");
+    client.user.setPresence(
+        {
+            activities: [{name: "🤖 AM AWAKE 🤖", type: ActivityType.Custom}],
+            status: "online"
+        }
+     );
 
-        let identifier = parsed[0].slice(1);
+}
 
-        let args = parsed.slice(1)
+function handleMessage(message) {
 
-        message.reply(Commands[identifier](args));
-        
-    }
+    if (message.content[0] !== "!") {return;}
+    
+    let parsed = message.content.split(" ");
 
-)
+    let identifier = parsed[0].slice(1);
 
+    let args = parsed.slice(1)
+
+    message.reply(Commands[identifier](args));
+    
+}
+
+client.on(Events.MessageCreate, handleMessage);
+client.once(Events.ClientReady, onClientReady);
 
