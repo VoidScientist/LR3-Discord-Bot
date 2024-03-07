@@ -1,8 +1,9 @@
-const UtilFuncs = {
+const utilFuncs = {
 
     conv: {
 
-        ObjToUrl: objectToUrlEncoded,
+        objToUrl: objectToUrlEncoded,
+        strToUrl: strToUrlEncoded,
 
     },
 
