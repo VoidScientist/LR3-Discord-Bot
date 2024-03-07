@@ -40,9 +40,11 @@ function handleMessage(message) {
 
     let identifier = parsed[0].slice(1);
 
-    let args = parsed.slice(1)
+    let args = parsed.slice(1);
 
-    message.reply(Commands[identifier](args));
+    message.channel.send(Commands[identifier](args));
+
+    message.delete(1000);
     
 }
 
