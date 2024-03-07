@@ -19,8 +19,11 @@ function objectToUrlEncoded(data) {
 
     for (let i = 0; i < keys.length; i++) {
 
-        res += `${keys[i]}=${values[i]}`;
-        res += i + 1 < keys.length ? "%20" : "";
+        let encodedValue = strToUrlEncoded(values[i]);
+        let encodedKey = strToUrlEncoded(keys[i]);
+
+        res += `${encodedKey}=${encodedValue}`;
+        res += i + 1 < keys.length ? "&" : "";
 
     }
 
