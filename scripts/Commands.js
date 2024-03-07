@@ -4,7 +4,8 @@ const Commands = {
     
     "cat" : getCatUrl,
     "dog" : getDogImage,
-    "crackhead" : getCrackhead
+    "crackhead" : getCrackhead,
+    "konami": getKonami
 
 };
 
@@ -46,7 +47,9 @@ function getCrackhead(){
 
 function getKonami(){
 
-    return 
+    // TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
+
+    return "Thou hast successfully transcended the realm of humanity.";
 
 }
 
