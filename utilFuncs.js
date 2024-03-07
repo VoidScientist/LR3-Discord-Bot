@@ -52,7 +52,8 @@ function arrayToUrlEncoded(array) {
 
     for (let i = 0; i < array.length; i++) {
 
-        res += `${array[i]}`;
+        let encodedValue = strToUrlEncoded(array[i]);
+        res += `${encodedValue}`;
         res += i + 1 < array.length ? "%20" : "";
 
     }
