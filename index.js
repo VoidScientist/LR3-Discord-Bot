@@ -42,7 +42,14 @@ async function handleMessage(message) {
 
     let args = parsed.slice(1);
 
-    message.channel.send(await Commands[identifier](args));
+    let func = Commands[identifier];
+
+    if (!func) {
+        message.reply(`"!${identifier}" command does not exist.`);
+        return;
+    }
+
+    message.channel.send(await func(args));
 
     message.delete(1000);
     
