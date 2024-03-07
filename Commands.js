@@ -6,7 +6,6 @@ const Commands = {
     "dog" : getDogImage,
     "crackhead" : getCrackhead
 
-
 };
 
 
@@ -19,24 +18,28 @@ function getCatUrl(content){
         return `https://cataas.com/cat/says/${text}?fontColor=white&fontSize=50`;
 
     }
-    
 
     return `https://cataas.com/cat`;
-
 
 }
 
 async function getDogImage(message) {
+
     const response = await fetch("https://dog.ceo/api/breeds/image/random");
+
     const dogs = await response.json();
+
     if (dogs.status === "success") {
-        return dogs.message
+
+        return dogs.message;
+
     }
+
 }
 
 function getCrackhead(){
 
-    return "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU"
+    return "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU";
 
 }
 
