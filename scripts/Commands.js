@@ -4,7 +4,8 @@ const Commands = {
     
     "cat" : getCatUrl,
     "dog" : getDogImage,
-    "crackhead" : getCrackhead
+    "crackhead" : getCrackhead,
+    "sis" : getHotChick
 
 };
 
@@ -44,9 +45,9 @@ function getCrackhead(){
 
 }
 
-function getKonami(){
+function getHotChick(){
 
-    return 
+    return "https://media.licdn.com/dms/image/D4E03AQEOfGLK6QLPMw/profile-displayphoto-shrink_100_100/0/1696966619616?e=1715212800&v=beta&t=msuJjcpLUojZRgvV-i3hk-CYP_wDO3tR2s1Ly7aalgU"
 
 }
 
