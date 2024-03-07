@@ -1,29 +1,47 @@
-import utilFuncs from "./UtilFuncs.js";
+import UtilFuncs from "./UtilFuncs.js";
 
 const tests = [
 
     {
-        func: utilFuncs.conv.objToUrl,
+        func: UtilFuncs.conv.objToUrl,
         parameter: {userName: "BobTheBuilder", password:"IHATEBUILDING"},
         expected: "userName=BobTheBuilder&password=IHATEBUILDING"
     },
 
     {
-        func: utilFuncs.conv.objToUrl,
+        func: UtilFuncs.conv.objToUrl,
         parameter: {userName:"Mickey Mouse", password:"Minnie is mid"},
         expected: "userName=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
     {
-        func: utilFuncs.conv.objToUrl,
+        func: UtilFuncs.conv.objToUrl,
         parameter: {"user Name":"Mickey Mouse", "password":"Minnie is mid"},
         expected: "user%20Name=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
     {
-        func: utilFuncs.conv.strToUrl,
+        func: UtilFuncs.conv.strToUrl,
         parameter: "BE NOT AFRAID",
         expected: "BE%20NOT%20AFRAID"
+    },
+
+    {
+        func: UtilFuncs.conv.arrayToUrl,
+        parameter: ["Raph","Connait","Pas","Ses","Returns"],
+        expected: "Raph%20Connait%20Pas%20Ses%20Returns"
+    },
+
+    {
+        func: UtilFuncs.conv.arrayToUrl,
+        parameter: [],
+        expected: ""
+    },
+
+    {
+        func: UtilFuncs.conv.arrayToUrl,
+        parameter: ["Bonjour"],
+        expected: "Bonjour"
     },
 
 ];

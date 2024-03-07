@@ -61,4 +61,4 @@ function arrayToUrlEncoded(array) {
 
 }
 
-export default utilFuncs
+export default UtilFuncs
