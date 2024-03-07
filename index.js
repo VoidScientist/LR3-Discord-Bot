@@ -51,3 +51,4 @@ async function handleMessage(message) {
 client.on(Events.MessageCreate, handleMessage);
 client.once(Events.ClientReady, onClientReady);
 
+
