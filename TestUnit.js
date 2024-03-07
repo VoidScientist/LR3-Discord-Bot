@@ -59,6 +59,18 @@ const tests = [
 
     {
         func: Commands.cat,
+        parameter: ["Bonjour"],
+        expected: `https://cataas.com/cat/says/%20?fontColor=white&fontSize=50`
+    },
+
+    {
+        func: Commands.cat,
+        parameter: [" "],
+        expected: `https://cataas.com/cat/says/%20?fontColor=white&fontSize=50`
+    },
+
+    {
+        func: Commands.cat,
         parameter: undefined,
         expected: `https://cataas.com/cat`
     },
@@ -84,6 +96,7 @@ for (let i = 0; i < tests.length; i++) {
 
         throw new Error(
             `Test ${i+1} failed for function: ${tests[i].func.name}\n
+            parameters: ${tests[i].parameter}\n
             got: ${result}\n
             expected: ${tests[i].expected}`
             );
