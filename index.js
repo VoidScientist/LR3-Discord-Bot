@@ -30,16 +30,6 @@ client.once(Events.ClientReady, client =>
     }
 );
 
-client.on(Events.MessageCreate, message => 
-    {
-        let parsed = message.content.split(" ");
-        let content = parsed.slice(1)
-        let identifier = parsed[0]
-        if (identifier !== "!cat") {return;}
-        message.reply(`https://cataas.com/cat/says/${content.join("%20")}?fontSize=50&fontColor=white`);
-    }
-);  
-
 client.on(Events.MessageCreate, (message) => 
 
     {
@@ -53,8 +43,6 @@ client.on(Events.MessageCreate, (message) =>
         let args = parsed.slice(1)
 
         message.reply(Commands[identifier](args));
-
-        console.log(args)
         
     }
 
