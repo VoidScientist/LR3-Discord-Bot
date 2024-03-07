@@ -23,17 +23,15 @@ function getCatUrl(content){
 
 }
 
-async function getDogImage(message) {
+async function getDogImage() {
 
     const response = await fetch("https://dog.ceo/api/breeds/image/random");
 
     const dogs = await response.json();
 
-    if (dogs.status === "success") {
+    if (dogs.status !== "success") { return "Dog API can't be reached."; }
 
-        return dogs.message;
-
-    }
+    return dogs.message;
 
 }
 

@@ -32,7 +32,7 @@ function onClientReady(client) {
 
 }
 
-function handleMessage(message) {
+async function handleMessage(message) {
 
     if (message.content[0] !== "!") {return;}
     
@@ -42,7 +42,7 @@ function handleMessage(message) {
 
     let args = parsed.slice(1);
 
-    message.channel.send(Commands[identifier](args));
+    message.channel.send(await Commands[identifier](args));
 
     message.delete(1000);
     
