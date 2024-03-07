@@ -1,4 +1,5 @@
 import UtilFuncs from "./UtilFuncs.js";
+import Commands from "./Commands.js";
 
 const tests = [
 
@@ -43,6 +44,11 @@ const tests = [
         parameter: ["Bonjour"],
         expected: "Bonjour"
     },
+    {
+        func: Commands["cat"],
+        parameter: ["hello", "world"],
+        expected: `https://cataas.com/cat/says/hello%20world?fontColor=white&fontSize=50`
+    }
 
 ];
 
