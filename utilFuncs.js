@@ -4,6 +4,7 @@ const UtilFuncs = {
 
         objToUrl: objectToUrlEncoded,
         strToUrl: strToUrlEncoded,
+        arrayToUrl: arrayToUrlEncoded,
 
     },
 
@@ -38,6 +39,21 @@ function strToUrlEncoded(string) {
     for (let i = 0; i < string.length; i++) {
 
         res += string[i] == " " ? "%20" : string[i];
+
+    }
+
+    return res;
+
+}
+
+function arrayToUrlEncoded(array) {
+
+    let res = "";
+
+    for (let i = 0; i < array.length; i++) {
+
+        res += `${array[i]}`;
+        res += i + 1 < array.length ? "%20" : "";
 
     }
 
