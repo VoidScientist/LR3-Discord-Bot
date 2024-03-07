@@ -6,7 +6,8 @@ const Commands = {
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
     "sis" : getHotChick,
-    "konami": getKonami
+    "konami": getKonami,
+    "joke": getJoke
 
 };
 
@@ -62,6 +63,30 @@ function getKonami() {
     // TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
 
     return "Thou hast successfully transcended the realm of humanity.";
+
+}
+
+async function getJoke(){
+
+    const response = await fetch("https://v2.jokeapi.dev/joke/Any");
+
+    const joke = await response.json();
+
+    if (joke.error === true){return;}
+
+    else{
+
+        if (joke.type === "single"){
+
+            return joke.joke
+        }
+
+        else {
+
+            return joke.setup + '\n' + joke.delivery
+            
+        }
+    }
 
 }
 
