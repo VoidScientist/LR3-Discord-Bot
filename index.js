@@ -1,6 +1,6 @@
 import { ActivityType, Client, Events, GatewayIntentBits } from 'discord.js';
 import CONFIG from './config.json' with {type: "json"};
-import Commands from './Commands.js';
+import Commands from './scripts/Commands.js';
 
 let self = -1;
 
