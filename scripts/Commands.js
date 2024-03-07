@@ -1,7 +1,10 @@
 import UtilFuncs from "./UtilFuncs.js";
 
+const hidden = ["konami", "sis"];
+
 const Commands = {
     
+    "help": getCommands,
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
@@ -11,6 +14,24 @@ const Commands = {
 
 };
 
+function getCommands() {
+
+    let keys = Object.keys(Commands);
+    
+    let res = "__Here are the commands:__\n";
+
+    for (let i = 0; i < keys.length; i++) {
+
+        if (hidden.includes(keys[i])) { continue; }
+
+        res += `- !${keys[i]}`;
+        res += i + 1 < keys.length ? "\n" : ""; 
+
+    }
+
+    return res;
+
+}
 
 function getCatUrl(content){
 
@@ -72,21 +93,11 @@ async function getJoke(){
 
     const joke = await response.json();
 
-    if (joke.error === true){return;}
+    if (joke.error === true) { return; }
 
-    else{
+    if (joke.type === "single") { return joke.joke; }
 
-        if (joke.type === "single"){
-
-            return joke.joke
-        }
-
-        else {
-
-            return joke.setup + '\n' + joke.delivery
-            
-        }
-    }
+    return joke.setup + '\n' + joke.delivery;
 
 }
 
