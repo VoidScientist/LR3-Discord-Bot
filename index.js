@@ -53,8 +53,6 @@ client.on(Events.MessageCreate, (message) =>
         let args = parsed.slice(1)
 
         message.reply(Commands[identifier](args));
-
-        console.log(args)
         
     }
 
