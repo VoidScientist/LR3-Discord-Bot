@@ -36,6 +36,6 @@ client.on(Events.MessageCreate, message =>
         let identifier = parsed[0]
         console.log(parsed);
         if (identifier !== "!cat") {return;}
-        message.reply(`https://cataas.com/cat/says/${content.join("%20")}`);        
+        message.reply(`https://cataas.com/cat/says/${content.join("%20")}?fontSize=50&fontColor=white`);        
     }
 );
