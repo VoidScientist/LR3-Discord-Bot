@@ -1,4 +1,4 @@
-import utilFuncs from "./utilFuncs.js";
+import utilFuncs from "./UtilFuncs.js";
 
 const tests = [
 

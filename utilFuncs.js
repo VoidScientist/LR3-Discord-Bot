@@ -1,4 +1,4 @@
-const utilFuncs = {
+const UtilFuncs = {
 
     conv: {
 
