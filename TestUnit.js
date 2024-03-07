@@ -44,6 +44,11 @@ const tests = [
         parameter: ["Bonjour"],
         expected: "Bonjour"
     },
+    {
+        func: UtilFuncs.conv.arrayToUrl,
+        parameter: [" "],
+        expected: "%20"
+    },
 
     {
         func: Commands.cat,
@@ -60,7 +65,7 @@ const tests = [
     {
         func: Commands.cat,
         parameter: ["Bonjour"],
-        expected: `https://cataas.com/cat/says/%20?fontColor=white&fontSize=50`
+        expected: `https://cataas.com/cat/says/Bonjour?fontColor=white&fontSize=50`
     },
 
     {
@@ -80,6 +85,7 @@ const tests = [
         parameter: null,
         expected: `https://cataas.com/cat`
     },
+    
 
 ];
 
