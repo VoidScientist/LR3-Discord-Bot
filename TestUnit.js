@@ -24,13 +24,18 @@ const tests = [
         func: utilFuncs.conv.strToUrl,
         parameter: "BE NOT AFRAID",
         expected: "BE%20NOT%20AFRAID"
-    }
+    },
 
-]
+];
+
+
+let testingStart = performance.now();
 
 for (let i = 0; i < tests.length; i++) {
 
+    let start = performance.now();
     let result = tests[i].func(tests[i].parameter);
+    let end = performance.now();
 
     if (result !== tests[i].expected) {
 
@@ -42,6 +47,13 @@ for (let i = 0; i < tests.length; i++) {
 
     }
 
-    console.log(`Test ${i+1} involving ${tests[i].func.name} passed.`);
+    let duration = (end-start).toFixed(2);
 
+    console.log(`[${tests[i].func.name}] Test ${i+1} passed in ${duration} ms.`);
+    
 }
+
+let testingEnd = performance.now();
+let testingDuration = (testingEnd-testingStart).toFixed(2);
+
+console.log(`[TestUnit] All tests cleared in: ${testingDuration} ms.`)
