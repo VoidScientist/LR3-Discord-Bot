@@ -12,7 +12,7 @@ const Commands = {
     "sis" : getHotChick,
     "konami": getKonami,
     "joke": getJoke,
-    "tranlate": getTranslation
+    "translate": getTranslation
 
 };
 
