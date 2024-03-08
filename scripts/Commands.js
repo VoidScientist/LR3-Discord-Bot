@@ -123,7 +123,7 @@ async function getTranslation(args) {
 
     const translate = await response.json();
 
-    if (translate.error.code === 429){return translate.error.message}
+    if (translate.hasOwnProperty("error")){return translate.error.message}
 
     return translate.contents.translated;
 }
