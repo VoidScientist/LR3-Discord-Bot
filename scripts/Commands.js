@@ -76,7 +76,7 @@ function getCrackhead(){
 
 function getRintarou(){
 
-    return "https://i1.sndcdn.com/avatars-000290781095-i22idu-t240x240.jpg"
+    return "https://i1.sndcdn.com/avatars-000290781095-i22idu-t240x240.jpg";
 
 }
 
