@@ -110,7 +110,7 @@ let testingStart = performance.now();
 for (let i = 0; i < tests.length; i++) {
 
     let start = performance.now();
-    let result = tests[i].func(tests[i].parameter);
+    let result = await tests[i].func(tests[i].parameter);
     let end = performance.now();
 
     if (result !== tests[i].expected) {
