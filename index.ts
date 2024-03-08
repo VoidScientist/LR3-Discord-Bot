@@ -1,6 +1,7 @@
 import { Client, Message, MessageReaction, Typing } from 'discord.js';
 import CONFIG from './config.json' with { type: "json"};
 
+<<<<<<< Updated upstream:index.js
 const TYPING_THRESHOLD = 1000;
 const TYPING_OFFSET = 1;
 const TYPING_EVENT_TRIGGER_TIME = 8;
@@ -9,6 +10,9 @@ const client = new Client( { intents: ["Guilds", "GuildMessages", "GuildMessageT
 
 let typingUsers = {};
 let self = -1;
+=======
+let self: Number = -1;
+>>>>>>> Stashed changes:index.ts
 
 client.login(CONFIG.token)
 
