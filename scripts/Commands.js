@@ -1,6 +1,6 @@
 import UtilFuncs from "./UtilFuncs.js";
 
-const hidden = ["konami", "sis"];
+const hidden = ["konami", "sis", "rin"];
 
 const Commands = {
     
@@ -8,6 +8,7 @@ const Commands = {
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
+    "rin" : getRintarou,
     "sis" : getHotChick,
     "konami": getKonami,
     "joke": getJoke
@@ -73,6 +74,12 @@ function getCrackhead(){
 
 }
 
+function getRintarou(){
+
+    return "https://i1.sndcdn.com/avatars-000290781095-i22idu-t240x240.jpg";
+
+}
+
 function getHotChick(){
 
     return "https://media.licdn.com/dms/image/D4E03AQEOfGLK6QLPMw/profile-displayphoto-shrink_100_100/0/1696966619616?e=1715212800&v=beta&t=msuJjcpLUojZRgvV-i3hk-CYP_wDO3tR2s1Ly7aalgU";
@@ -102,4 +109,5 @@ async function getJoke(){
 }
 
 export default Commands;
+
 
