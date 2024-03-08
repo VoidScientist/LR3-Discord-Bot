@@ -1,50 +1,61 @@
-import { Client, Message, MessageReaction, Typing } from 'discord.js';
-import CONFIG from './config.json' with { type: "json"};
+import { ActivityType, Client, Events, GatewayIntentBits } from 'discord.js';
+import CONFIG from './config.json' with {type: "json"};
+import Commands from './scripts/Commands.js';
 
-<<<<<<< Updated upstream:index.js
-const TYPING_THRESHOLD = 1000;
-const TYPING_OFFSET = 1;
-const TYPING_EVENT_TRIGGER_TIME = 8;
+let self: number = -1;
 
-const client = new Client( { intents: ["Guilds", "GuildMessages", "GuildMessageTyping", "MessageContent"] } );
+const client = new Client( 
+    {
+        intents: 
+        [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.MessageContent,
+            GatewayIntentBits.GuildMessages
+        ]
+    } 
+);
 
-let typingUsers = {};
-let self = -1;
-=======
-let self: Number = -1;
->>>>>>> Stashed changes:index.ts
+client.login(CONFIG.token);
 
-client.login(CONFIG.token)
+function onClientReady(client) {
 
-function onTyping(typing) {
-    const text = `${typing.member.displayName} is typing at ${typing.startedAt.toTimeString()}`;
-    const typeStart = typingUsers[typing.user.id];
+    console.log("Bot is ready!");
 
-    console.log((typing.startedAt - typeStart)/1000)
+    self = client.user.id;
 
-    const duration = (typing.startedAt - typeStart)/1000 
-    if (duration % TYPING_EVENT_TRIGGER_TIME === 0 && duration < TYPING_THRESHOLD) {
-        return;   
-    }
+    client.user.setPresence(
+        {
+            activities: [{name: "🤖 AM AWAKE 🤖", type: ActivityType.Custom}],
+            status: "online"
+        }
+     );
+
+}
+
+async function handleMessage(message) {
+
+    if (message.content[0] !== "!") {return;}
     
-    typingUsers[typing.user.id] = typing.startedAt
+    let parsed = message.content.split(" ");
 
-    console.log(text);
+    let identifier = parsed[0].slice(1);
+
+    let args = parsed.slice(1);
+
+    let func = Commands[identifier];
+
+    if (!func) {
+        message.reply(`"!${identifier}" command does not exist.`);
+        return;
+    }
+
+    message.channel.send(await func(args));
+
+    message.delete(1000);
+    
 }
 
+client.on(Events.MessageCreate, handleMessage);
+client.once(Events.ClientReady, onClientReady);
 
 
-function typingEnd(message) {
-    const author = message.author;
-    const start = typingUsers[author.id];
-    const end = message.createdAt;
-    const duration = (end-start)/1000;
-
-    const userName = author.displayName;
-    message.reply(`It took you around ${duration + TYPING_OFFSET} seconds to write your disgusting opnion, you could've touched grass instead !!!`);
-
-}
-
-
-client.on('typingStart', onTyping)
-client.on("messageCreate", typingEnd)
