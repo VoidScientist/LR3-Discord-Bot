@@ -110,8 +110,8 @@ async function timeExecution(func, parameter) {
 
     let start = performance.now();
 
-    let result = await tests[i].func(tests[i].parameter);
-    
+    let result = await func(parameter);
+
     let end = performance.now();
 
     return [result, (end-start).toFixed(2)];
