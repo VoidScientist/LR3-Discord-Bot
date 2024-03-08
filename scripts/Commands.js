@@ -129,7 +129,7 @@ async function getChuckFact(){
 
 async function getTranslation(args = ["morse", "Maybe a konami code is hiding somewhere..."]) {
 
-    const languages = ["yoda", "oldenglish", "pirate", "minion", "morse", "russian-accent"]
+    const languages = ["yoda", "oldenglish", "pirate", "minion", "morse", "russian-accent", "german-accent"]
 
     const language = args[0];
 
