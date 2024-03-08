@@ -11,7 +11,8 @@ const Commands = {
     "rin" : getRintarou,
     "sis" : getHotChick,
     "konami": getKonami,
-    "joke": getJoke
+    "joke": getJoke,
+    "chuckfact" : getChuckFact
 
 };
 
@@ -105,6 +106,18 @@ async function getJoke(){
     if (joke.type === "single") { return joke.joke; }
 
     return joke.setup + '\n' + joke.delivery;
+
+}
+
+async function getChuckFact(){
+
+    const response = await fetch("https://api.chucknorris.io/jokes/random");
+
+    const fact = await response.json();
+
+    if (fact.error === true) {return;}
+
+    return fact.value;
 
 }
 
