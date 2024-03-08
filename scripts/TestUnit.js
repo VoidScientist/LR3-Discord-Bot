@@ -1,136 +1,173 @@
 import UtilFuncs from "./UtilFuncs.js";
 import Commands from "./Commands.js";
+import { time } from "discord.js";
 
 const tests = [
 
-    // 1
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {userName: "BobTheBuilder", password:"IHATEBUILDING"},
         expected: "userName=BobTheBuilder&password=IHATEBUILDING"
     },
 
-    // 2 
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {userName:"Mickey Mouse", password:"Minnie is mid"},
         expected: "userName=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
-    // 3
     {
         func: UtilFuncs.conv.objToUrl,
         parameter: {"user Name":"Mickey Mouse", "password":"Minnie is mid"},
         expected: "user%20Name=Mickey%20Mouse&password=Minnie%20is%20mid"
     },
 
-    // 4
     {
         func: UtilFuncs.conv.strToUrl,
         parameter: "BE NOT AFRAID",
         expected: "BE%20NOT%20AFRAID"
     },
 
-    // 5
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: ["Raph","Connait","Pas","Ses","Returns"],
         expected: "Raph%20Connait%20Pas%20Ses%20Returns"
     },
 
-    // 6
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: [],
         expected: ""
     },
 
-    // 7
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: ["Bonjour"],
         expected: "Bonjour"
     },
 
-    // 8 
     {
         func: UtilFuncs.conv.arrayToUrl,
         parameter: [" "],
         expected: "%20"
     },
 
-    // 9
     {
         func: Commands.cat,
         parameter: ["hello", "world"],
         expected: `https://cataas.com/cat/says/hello%20world?fontColor=white&fontSize=50`
     },
 
-    // 10
     {
         func: Commands.cat,
         parameter: [],
         expected: `https://cataas.com/cat`
     },
 
-    // 11
     {
         func: Commands.cat,
         parameter: ["Bonjour"],
         expected: `https://cataas.com/cat/says/Bonjour?fontColor=white&fontSize=50`
     },
 
-    // 12
     {
         func: Commands.cat,
         parameter: [" "],
         expected: `https://cataas.com/cat/says/%20?fontColor=white&fontSize=50`
     },
 
-    // 13
     {
         func: Commands.cat,
         parameter: undefined,
         expected: `https://cataas.com/cat`
     },
 
-    // 14
     {
         func: Commands.cat,
         parameter: null,
         expected: `https://cataas.com/cat`
     },
+
+    {
+        func: UtilFuncs.conv.objToUrl,
+        checkType: "type",
+        parameter: {helloMan: "fuck you"},
+        expected: "string"
+    },
     
 
 ];
 
+const checkingTypes = {
 
-let testingStart = performance.now();
+    value: checkResultValue,
+    type: checkResultType
 
-for (let i = 0; i < tests.length; i++) {
+};
+
+
+async function timeExecution(func, parameter) {
 
     let start = performance.now();
+<<<<<<< HEAD
     let result = await tests[i].func(tests[i].parameter);
+=======
+
+    let result = await func(parameter);
+
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
     let end = performance.now();
 
-    if (result !== tests[i].expected) {
+    return [result, (end-start).toFixed(2)];
+
+}
+
+function checkResultType(result, test, testNum) {
+
+    if (!typeof result == test.expected) {
 
         throw new Error(
-            `Test ${i+1} failed for function: ${tests[i].func.name}\n
-            parameters: ${tests[i].parameter}\n
-            got: ${result}\n
-            expected: ${tests[i].expected}`
+            `Test ${testNum} failed for function: ${test.func.name}\n
+            parameters: ${test.parameter}\n
+            got: ${typeof result}\n
+            expected: ${test.expected}`
             );
 
     }
 
-    let duration = (end-start).toFixed(2);
-
-    console.log(`[${tests[i].func.name}] Test ${i+1} passed in ${duration} ms.`);
-    
 }
 
-let testingEnd = performance.now();
-let testingDuration = (testingEnd-testingStart).toFixed(2);
+function checkResultValue(result, test, testNum) {
 
-console.log(`[TestUnit] All tests cleared in: ${testingDuration} ms.`)
+    if (result !== test.expected) {
+    
+        throw new Error(
+            `Test ${testNum} failed for function: ${test.func.name}\n
+            parameters: ${test.parameter}\n
+            got: ${result}\n
+            expected: ${test.expected}`
+            );
+
+    }
+
+}
+
+async function checkTestCases() {
+
+    for (let i = 0; i < tests.length; i++) {
+
+        const checkType = tests[i].hasOwnProperty("checkType") ? tests[i].checkType : "value";
+
+        const [result, duration] = await timeExecution(tests[i].func, tests[i].parameter);
+    
+        checkingTypes[checkType](result, tests[i], i + 1);
+    
+        console.log(`[${tests[i].func.name}] Test ${i+1} passed in ${duration} ms.`);
+        
+    }
+
+}
+
+const [_, testingDuration] = await timeExecution(checkTestCases, null);
+
+console.log(`[TestUnit] All tests cleared in: ${testingDuration} ms.`);

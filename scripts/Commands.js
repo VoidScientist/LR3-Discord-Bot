@@ -12,7 +12,11 @@ const Commands = {
     "sis" : getHotChick,
     "konami": getKonami,
     "joke": getJoke,
+<<<<<<< HEAD
     "chuckfact" : getChuckFact
+=======
+    "translate": getTranslation
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
 
 };
 
@@ -109,6 +113,7 @@ async function getJoke(){
 
 }
 
+<<<<<<< HEAD
 async function getChuckFact(){
 
     const response = await fetch("https://api.chucknorris.io/jokes/random");
@@ -119,6 +124,25 @@ async function getChuckFact(){
 
     return fact.value;
 
+=======
+async function getTranslation(args) {
+
+    const languages = ["yoda", "oldenglish", "pirate", "minions", "morse", "russian-accent"]
+    const language = args[0];
+    const encodedMessage = UtilFuncs.conv.arrayToUrl(args.splice(1));
+
+    if(!languages.includes(language)){return "Language not supported. Try: " + languages[Math.floor(Math.random() *(languages.length - 1))]}
+
+    let link = "https://api.funtranslations.com/translate/" + language + "?text=";
+    
+    const response = await fetch(link + encodedMessage);
+
+    const translate = await response.json();
+
+    if (translate.error.code === 429){return translate.error.message}
+
+    return translate.contents.translated;
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
 }
 
 export default Commands;
