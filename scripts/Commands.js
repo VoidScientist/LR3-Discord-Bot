@@ -1,6 +1,6 @@
 import UtilFuncs from "./UtilFuncs.js";
 
-const hidden = ["konami", "sis", "rin"];
+const hidden = ["konami", "sis", "rin", "kurisutina"];
 
 const Commands = {
     
@@ -13,7 +13,8 @@ const Commands = {
     "konami": getKonami,
     "joke": getJoke,
     "chuckfact" : getChuckFact,
-    "translate": getTranslation
+    "translate": getTranslation,
+    "kurisutina" : getKurisutina
 
 };
 
@@ -77,6 +78,12 @@ function getCrackhead(){
 function getRintarou(){
 
     return "https://i1.sndcdn.com/avatars-000290781095-i22idu-t240x240.jpg";
+
+}
+
+function getKurisutina(){
+
+    return "https://www.meme-arsenal.com/memes/1257953f667bc33671caf8855adc0e23.jpg";
 
 }
 
