@@ -11,7 +11,8 @@ const Commands = {
     "rin" : getRintarou,
     "sis" : getHotChick,
     "konami": getKonami,
-    "joke": getJoke
+    "joke": getJoke,
+    "tranlate": getTranslation
 
 };
 
@@ -106,6 +107,25 @@ async function getJoke(){
 
     return joke.setup + '\n' + joke.delivery;
 
+}
+
+async function getTranslation(args) {
+
+    const languages = ["yoda", "oldenglish", "pirate", "minions", "morse", "russian-accent"]
+    const language = args[0];
+    const encodedMessage = UtilFuncs.conv.arrayToUrl(args.splice(1));
+
+    if(!languages.includes(language)){return "Language not supported. Try: " + languages[Math.floor(Math.random() *(languages.length - 1))]}
+
+    let link = "https://api.funtranslations.com/translate/" + language + "?text=";
+    
+    const response = await fetch(link + encodedMessage);
+
+    const translate = await response.json();
+
+    if (translate.error.code === 429){return translate.error.message}
+
+    return translate.contents.translated;
 }
 
 export default Commands;
