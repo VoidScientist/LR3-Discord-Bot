@@ -12,7 +12,11 @@ const Commands = {
     "sis" : getHotChick,
     "konami": getKonami,
     "joke": getJoke,
+<<<<<<< HEAD
+    "chuckfact" : getChuckFact
+=======
     "translate": getTranslation
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
 
 };
 
@@ -107,6 +111,18 @@ async function getJoke(){
 
 }
 
+<<<<<<< HEAD
+async function getChuckFact(){
+
+    const response = await fetch("https://api.chucknorris.io/jokes/random");
+
+    const fact = await response.json();
+
+    if (fact.error === true) {return;}
+
+    return fact.value;
+
+=======
 async function getTranslation(args) {
 
     const languages = ["yoda", "oldenglish", "pirate", "minions", "morse", "russian-accent"]
@@ -126,6 +142,7 @@ async function getTranslation(args) {
     if (translate.error.code === 429){return translate.error.message}
 
     return translate.contents.translated;
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
 }
 
 export default Commands;

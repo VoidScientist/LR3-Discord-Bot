@@ -109,9 +109,13 @@ const checkingTypes = {
 async function timeExecution(func, parameter) {
 
     let start = performance.now();
+<<<<<<< HEAD
+    let result = await tests[i].func(tests[i].parameter);
+=======
 
     let result = await func(parameter);
 
+>>>>>>> 729107a56201b483661c35e77ec1d367dee204c3
     let end = performance.now();
 
     return [result, (end-start).toFixed(2)];
