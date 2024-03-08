@@ -29,7 +29,11 @@ function onClientReady(client: Client): void {
 
     client.user.setPresence(
         {
-            activities: [{name: "🤖 AM AWAKE 🤖", type: ActivityType.Custom}],
+            activities: [
+                {name: "🤖 AM AWAKE 🤖",
+                 type: ActivityType.Custom
+                }
+            ],
             status: "online"
         }
      );

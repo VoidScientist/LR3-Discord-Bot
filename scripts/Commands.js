@@ -1,4 +1,4 @@
-import UtilFuncs from "./UtilFuncs.js";
+import UtilFuncs from "./UtilFuncs.ts";
 
 const hidden = [
     "konami", 

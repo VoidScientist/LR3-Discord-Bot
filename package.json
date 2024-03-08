@@ -4,7 +4,7 @@
   "description": "some bot for the lr3 discord",
   "main": "index.ts",
   "scripts": {
-    "start": "node ./scripts/TestUnit && node index && end 1"
+    "start": "node ./scripts/TestUnit.js && node ./index.js && end 1"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
   "author": "VoidScientist, Raphraphra, Theovrx",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "ts-node": "^10.9.2"
   },
   "type": "module"
 }

@@ -1,4 +1,4 @@
-import UtilFuncs from "./UtilFuncs.js";
+import UtilFuncs from "./UtilFuncs.ts";
 import Commands from "./Commands.js";
 
 const TIME_PRECISION = 3;
