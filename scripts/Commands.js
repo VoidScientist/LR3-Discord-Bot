@@ -12,6 +12,7 @@ const Commands = {
     "sis" : getHotChick,
     "konami": getKonami,
     "joke": getJoke,
+    "chuckfact" : getChuckFact,
     "translate": getTranslation
 
 };
@@ -69,9 +70,7 @@ function getCrackhead(){
         "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI"
     ];
 
-    const rand = Math.floor(Math.random()*faces.length);
-
-    return faces[rand];
+    return UtilFuncs.rand.arrayPickRand(faces);
 
 }
 
@@ -109,13 +108,27 @@ async function getJoke(){
 
 }
 
+async function getChuckFact(){
+
+    const response = await fetch("https://api.chucknorris.io/jokes/random");
+
+    const fact = await response.json();
+
+    if (fact.error === true) {return;}
+
+    return fact.value;
+
+}
+
 async function getTranslation(args) {
 
     const languages = ["yoda", "oldenglish", "pirate", "minions", "morse", "russian-accent"]
+
     const language = args[0];
+
     const encodedMessage = UtilFuncs.conv.arrayToUrl(args.splice(1));
 
-    if(!languages.includes(language)){return "Language not supported. Try: " + languages[Math.floor(Math.random() *(languages.length - 1))]}
+    if(!languages.includes(language)) { return "Language not supported. Try: " + languages[Math.floor(Math.random() * (languages.length - 1))];}
 
     let link = "https://api.funtranslations.com/translate/" + language + "?text=";
     

@@ -8,6 +8,13 @@ const UtilFuncs = {
 
     },
 
+    rand: {
+
+        randRange: randRange,
+        arrayPickRand: pickRandomInArray
+        
+    }
+
 
 };
 
@@ -59,6 +66,21 @@ function arrayToUrlEncoded(array) {
     }
 
     return res;
+
+}
+
+
+function randRange(start, end) {
+
+    return Math.floor(Math.random() * (end-start)) + start;
+
+}
+
+function pickRandomInArray(array) {
+
+    const index = Math.floor(Math.random() * array.length);
+
+    return array[index];
 
 }
 

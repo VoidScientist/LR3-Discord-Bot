@@ -90,8 +90,8 @@ const tests = [
 
     {
         func: UtilFuncs.conv.objToUrl,
-        parameter: {helloMan: "fuck you"},
         checkType: "type",
+        parameter: {helloMan: "fuck you"},
         expected: "string"
     },
     
@@ -103,7 +103,7 @@ const checkingTypes = {
     value: checkResultValue,
     type: checkResultType
 
-}
+};
 
 
 async function timeExecution(func, parameter) {
@@ -154,7 +154,7 @@ async function checkTestCases() {
 
         const checkType = tests[i].hasOwnProperty("checkType") ? tests[i].checkType : "value";
 
-        const [result, duration] = await timeExecution(tests[i].func, tests[i].parameter)
+        const [result, duration] = await timeExecution(tests[i].func, tests[i].parameter);
     
         checkingTypes[checkType](result, tests[i], i + 1);
     
