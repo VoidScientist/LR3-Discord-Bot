@@ -120,15 +120,15 @@ async function getChuckFact(){
 
 }
 
-async function getTranslation(args) {
+async function getTranslation(args = ["morse", "Maybe a konami code is hiding somewhere..."]) {
 
-    const languages = ["yoda", "oldenglish", "pirate", "minions", "morse", "russian-accent"]
+    const languages = ["yoda", "oldenglish", "pirate", "minion", "morse", "russian-accent"]
 
     const language = args[0];
 
     const encodedMessage = UtilFuncs.conv.arrayToUrl(args.splice(1));
 
-    if(!languages.includes(language)) { return "Language not supported. Try: " + languages[Math.floor(Math.random() * (languages.length - 1))];}
+    if(!languages.includes(language)) {return "Language not supported. Try: " + languages[UtilFuncs.rand.randRange(0, languages.length-1)];}
 
     let link = "https://api.funtranslations.com/translate/" + language + "?text=";
     
@@ -136,7 +136,7 @@ async function getTranslation(args) {
 
     const translate = await response.json();
 
-    if (translate.hasOwnProperty("error")){return translate.error.message}
+    if (translate.hasOwnProperty("error")) {return translate.error.message;}
 
     return translate.contents.translated;
 }
