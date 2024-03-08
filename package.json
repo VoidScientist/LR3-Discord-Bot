@@ -2,15 +2,15 @@
   "name": "lr3-discord-bot",
   "version": "1.0.0",
   "description": "some bot for the lr3 discord",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./scripts/TestUnit && node index && end 1"
   },
   "repository": {
     "type": "git",
     "url": "LR3-Discord-Bot"
   },
-  "author": "VoidScientist, Raphraphra",
+  "author": "VoidScientist, Raphraphra, Theovrx",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^14.14.1"

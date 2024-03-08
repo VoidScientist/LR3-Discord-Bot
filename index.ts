@@ -1,8 +1,8 @@
-import { ActivityType, Client, Events, GatewayIntentBits } from 'discord.js';
+import { ActivityType, Client, ClientPresence, ClientUser, Events, GatewayIntentBits, Message } from 'discord.js';
 import CONFIG from './config.json' with {type: "json"};
 import Commands from './scripts/Commands.js';
 
-let self: number = -1;
+let self: String;
 
 const client = new Client( 
     {
@@ -17,9 +17,13 @@ const client = new Client(
 
 client.login(CONFIG.token);
 
-function onClientReady(client) {
+function onClientReady(client: Client): void {
 
     console.log("Bot is ready!");
+
+    if (!client.user) { 
+        throw new Error("No client received when starting the bot."); 
+    }
 
     self = client.user.id;
 
@@ -32,17 +36,17 @@ function onClientReady(client) {
 
 }
 
-async function handleMessage(message) {
+async function handleMessage(message: Message): Promise<void> {
 
     if (message.content[0] !== "!") {return;}
     
-    let parsed = message.content.split(" ");
+    let parsed: String[] = message.content.split(" ");
 
-    let identifier = parsed[0].slice(1);
+    let identifier: String = parsed[0].slice(1);
 
-    let args = parsed.slice(1);
+    let args: String[] = parsed.slice(1);
 
-    let func = Commands[identifier];
+    let func: Function = Commands[identifier];
 
     if (!func) {
         message.reply(`"!${identifier}" command does not exist.`);
@@ -51,7 +55,7 @@ async function handleMessage(message) {
 
     message.channel.send(await func(args));
 
-    message.delete(1000);
+    message.delete();
     
 }
 
