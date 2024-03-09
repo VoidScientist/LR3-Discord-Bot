@@ -5,6 +5,7 @@ const hidden = ["konami", "sis", "rin", "kurisutina"];
 const Commands = {
     
     "help": getCommands,
+    "random" : pickRandom,
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
@@ -18,6 +19,7 @@ const Commands = {
     "pokemon": getPokemonEmbed 
 
 };
+
 
 function getCommands() {
 
@@ -38,7 +40,17 @@ function getCommands() {
 
 }
 
-function getCatUrl(content){
+function pickRandom(){
+
+    let keys = Object.keys(Commands)
+    let selected = UtilFuncs.rand.arrayPickRand(keys)
+
+    return Commands[selected]()
+
+
+}
+
+function getCatUrl(content = "Look! You can print out text..."){
 
     if (content && content.length > 0 && content instanceof Array) {
 
@@ -149,7 +161,7 @@ async function getTranslation(args = ["morse", "Maybe a konami code is hiding so
     return translate.contents.translated;
 }
 
-async function getPokemonEmbed(args) {
+async function getPokemonEmbed(args = ["charizard"]) {
     
 
     let [name, _] = args;
@@ -159,6 +171,8 @@ async function getPokemonEmbed(args) {
     const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
 
     const pokemonData = await pokemon.json();
+
+    if (pokemonData == "Not Found") {return;}
 
     const pokemonFormUrl = pokemonData.forms[0].url;
 
