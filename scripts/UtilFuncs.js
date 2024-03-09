@@ -15,8 +15,9 @@ const UtilFuncs = {
         
     },
 
-    data: {
-        date : getCurrentDate
+    time: {
+        date : getCurrentDate,
+        previousDate : getPreviousDate
     }
 
 
@@ -96,6 +97,30 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
     const response = await data.json();
 
     return response.formatted;
+
+}
+
+function getPreviousDate(){
+
+    let date = new Date();
+                      
+    date.setDate(date.getDate() - 1);
+
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    if (day < 10){
+
+        day = `0${day}`;
+    }
+
+    if (month < 10){
+
+        month = `0${month}`;
+    }
+    
+    return `${year}-${month}-${day}`;
 
 }
 

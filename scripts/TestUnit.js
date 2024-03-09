@@ -97,8 +97,12 @@ const tests = [
         func: UtilFuncs.data.date,
         parameter : ["France","Paris", "dd/MM/yyyy"],
         expected: "09/03/2024"
+    },
+    {
+        func: Commands.stock,
+        parameter: ["gegzge", "yes"],
+        expected : "gegzge either isn't on the stockmarket or doesn't exist."
     }
-
 
 ];
 

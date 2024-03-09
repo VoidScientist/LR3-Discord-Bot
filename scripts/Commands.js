@@ -1,5 +1,5 @@
 import UtilFuncs from "./UtilFuncs.js";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, formatEmoji } from "discord.js";
 
 const hidden = ["konami", "sis", "rin", "kurisutina", "help", "bocchi"];
 
@@ -18,7 +18,8 @@ const Commands = {
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "pokemon": getPokemonEmbed 
+    "pokemon": getPokemonEmbed ,
+    "stock" : getStockRate
 
 };
 
@@ -205,6 +206,24 @@ async function getPokemonEmbed(args = ["charizard"]) {
     );
 
     return {embeds: [exampleEmbed]};
+
+}
+
+async function getStockRate(args){
+
+    let [stock,_] = args
+
+    const apiKey = "aqlJ4KAyAUR0r_ludhGGyti_nRpJhDxD";
+
+    const formattedDate = UtilFuncs.data.previousDate()
+
+    const response = await fetch(`https://api.polygon.io/v1/open-close/${stock}/${formattedDate}?adjusted=true&apiKey=${apiKey}`);
+
+    const data = await response.json();
+    
+    if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
+
+    return `Open price of ${stock} : ${data.open}$ on ${formattedDate}` ; 
 
 }
 
