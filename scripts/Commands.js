@@ -1,21 +1,21 @@
 import UtilFuncs from "./UtilFuncs.js";
 
-const hidden = ["konami", "sis", "rin", "kurisutina"];
+const hidden = ["konami", "sis", "rin", "kurisutina", "help"];
 
 const Commands = {
     
     "help": getCommands,
     "random" : pickRandom,
+    "konami": getKonami,
+    "rin" : getRintarou,
+    "sis" : getHotChick,
+    "kurisutina" : getKurisutina,
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
-    "rin" : getRintarou,
-    "sis" : getHotChick,
-    "konami": getKonami,
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "kurisutina" : getKurisutina,
     "pokemon": getPokemonEmbed 
 
 };
@@ -42,7 +42,7 @@ function getCommands() {
 
 function pickRandom(){
 
-    let keys = Object.keys(Commands)
+    let keys = Object.keys(Commands).slice(hidden.length)
     let selected = UtilFuncs.rand.arrayPickRand(keys)
 
     return Commands[selected]()
