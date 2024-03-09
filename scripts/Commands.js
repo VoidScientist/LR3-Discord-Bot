@@ -224,7 +224,17 @@ async function getStockRate(args){
     
     if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
 
-    return `Data for ${stock} on ${formattedDate}:\nOpen : ${data.open}$\nClosing : ${data.close}$.` ; 
+    const exampleEmbed = new EmbedBuilder()
+	.setColor("#7f219c")
+	.setTitle(stock)
+	.setThumbnail("https://img.freepik.com/vecteurs-libre/concept-marche-boursier-degrade_23-2149166910.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1708041600&semt=ais")
+    .addFields(
+        {name : "Time", value: formattedDate},
+        {name: "Open", value: `${data.open}$`},
+        {name: "Close", value: `${data.close}$`}
+    );
+
+    return {embeds : [exampleEmbed]}; 
 
 }
 
