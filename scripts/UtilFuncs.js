@@ -5,7 +5,7 @@ const UtilFuncs = {
         objToUrl: objectToUrlEncoded,
         strToUrl: strToUrlEncoded,
         arrayToUrl: arrayToUrlEncoded,
-        IcsfileToList: getEventsFromIcs
+
     },
 
     rand: {
@@ -18,6 +18,10 @@ const UtilFuncs = {
     time: {
         date : getCurrentDate,
         previousDate : getPreviousDate
+    },
+
+    alcuin: {
+        IcsFileToList: getEventsFromIcs
     }
 
 
