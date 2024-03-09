@@ -42,7 +42,7 @@ function getCommands() {
 
 function pickRandom(){
 
-    let keys = Object.keys(Commands).slice(hidden.length)
+    let keys = Object.keys(Commands).slice(hidden.length + 1)
     let selected = UtilFuncs.rand.arrayPickRand(keys)
 
     return Commands[selected]()
