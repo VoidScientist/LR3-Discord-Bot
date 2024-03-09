@@ -238,6 +238,18 @@ async function getStockRate(args){
 
 }
 
+async function getSchedule() {
+
+    const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
+
+    const icsFile = await response.text();
+
+    let parsed = icsFile.split("\n");
+
+    let schedule = getEventsFromIcs(parsed);
+    console.log(schedule);
+
+}
 
 export default Commands;
 
