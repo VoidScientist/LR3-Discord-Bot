@@ -1,4 +1,5 @@
 import UtilFuncs from "./UtilFuncs.js";
+import { EmbedBuilder } from "discord.js";
 
 const hidden = ["konami", "sis", "rin", "kurisutina", "help", "bocchi"];
 
@@ -17,7 +18,7 @@ const Commands = {
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "pokemon": getPokemonEmbed
+    "pokemon": getPokemonEmbed 
 
 };
 
@@ -195,12 +196,15 @@ async function getPokemonEmbed(args = ["charizard"]) {
 
     const sprite = pokemonFormData.sprites.front_default;
 
-    // const exampleEmbed = new EmbedBuilder()
-	// .setColor(0x0099FF)
-	// .setTitle(name)
-	// .setThumbnail(sprite)
+    const exampleEmbed = new EmbedBuilder()
+	.setColor(0xed2c28)
+	.setTitle(name)
+	.setThumbnail(sprite)
+    .addFields(
+        {name: "HP", value: pokemonData.stats[0].base_stat.toString()}
+    );
 
-    return sprite;
+    return {embeds: [exampleEmbed]};
 
 }
 
