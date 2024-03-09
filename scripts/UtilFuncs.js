@@ -13,6 +13,10 @@ const UtilFuncs = {
         randRange: randRange,
         arrayPickRand: pickRandomInArray
         
+    },
+
+    data: {
+        date : getCurrentDate
     }
 
 
@@ -84,4 +88,16 @@ function pickRandomInArray(array) {
 
 }
 
-export default UtilFuncs
+async function getCurrentDate(args = ["France","Lille"]){
+
+    let [country, city,_] = args;
+    if (!city || !country) {return;}
+    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=dd/MM/yyyy`);
+    const response = await data.json();
+
+    return response.formatted;
+
+}
+
+
+export default UtilFuncs;

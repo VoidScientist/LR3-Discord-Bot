@@ -17,7 +17,7 @@ const Commands = {
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "pokemon": getPokemonEmbed 
+    "pokemon": getPokemonEmbed
 
 };
 
