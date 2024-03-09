@@ -213,7 +213,6 @@ async function getStockRate(args){
 
     let [stock,_] = args
 
-
     const apiKey = "aqlJ4KAyAUR0r_ludhGGyti_nRpJhDxD";
 
     const formattedDate = UtilFuncs.time.previousDate()
@@ -224,8 +223,10 @@ async function getStockRate(args){
     
     if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
 
+    const colors = ["#7f219c", "#d96f8d","#6cc45a","#2b30c2"]
+
     const exampleEmbed = new EmbedBuilder()
-	.setColor("#7f219c")
+	.setColor(UtilFuncs.rand.arrayPickRand(colors))
 	.setTitle(stock)
 	.setThumbnail("https://img.freepik.com/vecteurs-libre/concept-marche-boursier-degrade_23-2149166910.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1708041600&semt=ais")
     .addFields(
