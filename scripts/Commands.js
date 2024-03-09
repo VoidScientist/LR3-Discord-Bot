@@ -236,7 +236,7 @@ async function getSchedule() {
 
     let parsed = icsFile.split("\n");
 
-    let schedule = getEventsFromIcs(parsed);
+    let schedule = UtilFuncs.alcuin.icsFileToList(parsed);
     console.log(schedule);
 
 }

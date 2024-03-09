@@ -21,7 +21,7 @@ const UtilFuncs = {
     },
 
     alcuin: {
-        IcsFileToList: getEventsFromIcs
+        icsFileToList: getEventsFromIcs
     }
 
 
