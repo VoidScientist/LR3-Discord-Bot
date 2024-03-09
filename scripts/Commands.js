@@ -213,6 +213,7 @@ async function getStockRate(args){
 
     let [stock,_] = args
 
+
     const apiKey = "aqlJ4KAyAUR0r_ludhGGyti_nRpJhDxD";
 
     const formattedDate = UtilFuncs.time.previousDate()
@@ -223,7 +224,7 @@ async function getStockRate(args){
     
     if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
 
-    return `Data for ${stock} on ${formattedDate}: Open : ${data.open}$, Closing : ${data.close}$.` ; 
+    return `Data for ${stock} on ${formattedDate}:\nOpen : ${data.open}$\nClosing : ${data.close}$.` ; 
 
 }
 
