@@ -5,7 +5,7 @@ const UtilFuncs = {
         objToUrl: objectToUrlEncoded,
         strToUrl: strToUrlEncoded,
         arrayToUrl: arrayToUrlEncoded,
-
+        IcsfileToList: getEventsFromIcs
     },
 
     rand: {
@@ -122,6 +122,40 @@ function getPreviousDate(){
     
     return `${year}-${month}-${day}`;
 
+}
+
+function getEventsFromIcs(file){
+    const events = []; 
+    let event = {};
+
+    for (let line of file){
+
+        if (line == 'BEGIN:VEVENT\r'){event = {subject:"", location:"", date:{}, start:{}, end:{}};} 
+
+        else if (line == 'END:VEVENT\r'){events.push(event);}
+
+        else if(line.includes("SUMMARY")){event.subject = line.slice(8, line.length-1);}
+
+        else if(line.includes("LOCATION")){event.location = line.slice(9, line.length-1);}
+
+        else if(line.includes("DTSTART")){
+
+            event.date.year = line.slice(8,12);
+            event.date.month = line.slice(12, 14);
+            event.date.day = line.slice(14,16);
+            event.start.hour = line.slice(17,19);
+            event.start.minutes = line.slice(19,21);
+
+        }
+
+        else if(line.includes("DTEND")){
+
+            event.end.hour = line.slice(15,17);
+            event.end.minutes = line.slice(17,19);
+
+        }
+    }
+    return events;
 }
 
 
