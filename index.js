@@ -38,7 +38,7 @@ async function handleMessage(message) {
     
     let parsed = message.content.split(" ");
 
-    let identifier = parsed[0].slice(1);
+    let identifier = parsed[0].slice(1).toLowerCase();
 
     let args = parsed.slice(1);
 

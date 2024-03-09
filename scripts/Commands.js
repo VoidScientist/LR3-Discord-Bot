@@ -14,7 +14,8 @@ const Commands = {
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "kurisutina" : getKurisutina
+    "kurisutina" : getKurisutina,
+    "pokemon": getPokemonEmbed 
 
 };
 
@@ -146,6 +147,34 @@ async function getTranslation(args = ["morse", "Maybe a konami code is hiding so
     if (translate.hasOwnProperty("error")) {return translate.error.message;}
 
     return translate.contents.translated;
+}
+
+async function getPokemonEmbed(args) {
+    
+
+    let [name, _] = args;
+
+    name = name.toLowerCase();
+
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
+    const pokemonData = await pokemon.json();
+
+    const pokemonFormUrl = pokemonData.forms[0].url;
+
+    const pokemonForm = await fetch(pokemonFormUrl);
+
+    const pokemonFormData = await pokemonForm.json();
+
+    const sprite = pokemonFormData.sprites.front_default;
+
+    // const exampleEmbed = new EmbedBuilder()
+	// .setColor(0x0099FF)
+	// .setTitle(name)
+	// .setThumbnail(sprite)
+
+    return sprite;
+
 }
 
 export default Commands;

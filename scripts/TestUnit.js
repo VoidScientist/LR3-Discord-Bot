@@ -1,6 +1,5 @@
 import UtilFuncs from "./UtilFuncs.js";
 import Commands from "./Commands.js";
-import { time } from "discord.js";
 
 const tests = [
 
@@ -20,6 +19,13 @@ const tests = [
         func: UtilFuncs.conv.objToUrl,
         parameter: {"user Name":"Mickey Mouse", "password":"Minnie is mid"},
         expected: "user%20Name=Mickey%20Mouse&password=Minnie%20is%20mid"
+    },
+
+    {
+        func: UtilFuncs.conv.objToUrl,
+        checkType: "type",
+        parameter: {helloMan: "hallo guy"},
+        expected: "string"
     },
 
     {
@@ -88,12 +94,7 @@ const tests = [
         expected: `https://cataas.com/cat`
     },
 
-    {
-        func: UtilFuncs.conv.objToUrl,
-        checkType: "type",
-        parameter: {helloMan: "fuck you"},
-        expected: "string"
-    },
+    
     
 
 ];
