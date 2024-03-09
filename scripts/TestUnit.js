@@ -94,7 +94,7 @@ const tests = [
         expected: `https://cataas.com/cat`
     },
     {
-        func: UtilFuncs.data.date,
+        func: UtilFuncs.time.date,
         parameter : ["France","Paris", "dd/MM/yyyy"],
         expected: "09/03/2024"
     },
