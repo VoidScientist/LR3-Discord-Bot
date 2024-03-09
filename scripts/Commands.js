@@ -18,7 +18,7 @@ const Commands = {
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
-    "pokemon": getPokemonEmbed
+    "pokemon": getPokemonEmbed 
 
 };
 
@@ -195,8 +195,6 @@ async function getPokemonEmbed(args = ["charizard"]) {
     const pokemonFormData = await pokemonForm.json();
 
     const sprite = pokemonFormData.sprites.front_default;
-
-    console.log(pokemonData.stats[0].base_stat)
 
     const exampleEmbed = new EmbedBuilder()
 	.setColor(0xed2c28)
