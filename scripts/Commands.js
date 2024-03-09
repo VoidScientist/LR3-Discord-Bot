@@ -1,6 +1,6 @@
 import UtilFuncs from "./UtilFuncs.js";
 
-const hidden = ["konami", "sis", "rin", "kurisutina", "help"];
+const hidden = ["konami", "sis", "rin", "kurisutina", "help", "bocchi"];
 
 const Commands = {
     
@@ -10,6 +10,7 @@ const Commands = {
     "rin" : getRintarou,
     "sis" : getHotChick,
     "kurisutina" : getKurisutina,
+    "bocchi" : getBocchi,
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
@@ -103,6 +104,18 @@ function getKurisutina(){
 function getHotChick(){
 
     return "https://media.licdn.com/dms/image/D4E03AQEOfGLK6QLPMw/profile-displayphoto-shrink_100_100/0/1696966619616?e=1715212800&v=beta&t=msuJjcpLUojZRgvV-i3hk-CYP_wDO3tR2s1Ly7aalgU";
+
+}
+
+function getBocchi(){
+
+    let faces = [
+        "https://i0.wp.com/anitrendz.net/news/wp-content/uploads/2023/03/hitori-gotou-dead.png?resize=650%2C366&ssl=1",
+        "https://preview.redd.it/omori-inspired-bocchi-meme-i-made-a-few-months-ago-v0-ncfpj91oy7ja1.jpg?width=640&crop=smart&auto=webp&s=14bb1b5878a69ad24cc7c80c57293c42d7d7277b",
+        "https://cdn.epicstream.com/images/ncavvykf/epicstream/dbfc4525f1e24613c4edd4607d1a441abb2af670-1280x720.jpg?rect=0,24,1280,672&w=1200&h=630&auto=format"
+    ]
+
+    return UtilFuncs.rand.arrayPickRand(faces)
 
 }
 
