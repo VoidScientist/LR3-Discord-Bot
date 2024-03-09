@@ -88,16 +88,18 @@ function pickRandomInArray(array) {
 
 }
 
-async function getCurrentDate(args = ["France","Lille"]){
+async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
-    let [country, city,_] = args;
+    let [country, city, format,_] = args;
     if (!city || !country) {return;}
-    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=dd/MM/yyyy`);
+    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
     const response = await data.json();
 
     return response.formatted;
 
 }
+
+
 
 
 export default UtilFuncs;

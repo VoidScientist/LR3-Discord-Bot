@@ -95,7 +95,7 @@ const tests = [
     },
     {
         func: UtilFuncs.data.date,
-        parameter : ["France","Paris"],
+        parameter : ["France","Paris", "dd/MM/yyyy"],
         expected: "09/03/2024"
     }
 
