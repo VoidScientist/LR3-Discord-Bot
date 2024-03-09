@@ -19,7 +19,8 @@ const Commands = {
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
     "pokemon": getPokemonEmbed ,
-    "stock" : getStockRate
+    "stock" : getStockRate,
+    "schedule": getSchedule
 
 };
 
@@ -239,16 +240,44 @@ async function getStockRate(args){
 
 }
 
-async function getSchedule() {
+async function getSchedule(args = "04/04/2024") {
+
+    if (args.length === 0){var date = await UtilFuncs.time.date();}
+
+    else {var [date,_] = args}
 
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
 
     const icsFile = await response.text();
 
     let parsed = icsFile.split("\n");
+    
+    let schedule = await UtilFuncs.alcuin.icsFileToList(parsed);
 
-    let schedule = UtilFuncs.alcuin.icsFileToList(parsed);
-    console.log(schedule);
+    const Embeds = [];
+
+    for(let i of schedule){
+
+        if(i.date.dateFr === date){
+            const exampleEmbed = new EmbedBuilder()
+            .setColor(0xed7f10)
+            .setTitle(i.subject)
+            .addFields(
+                {name: "Date", value: i.date.dateFr},
+                {name: "Starts at:", value: i.start.hour + "h" + i.start.minutes},
+                {name: "Ends at", value: i.end.hour + "h" + i.end.minutes},
+                {name: "Location", value: i.location}
+            );
+
+            Embeds.push(exampleEmbed);
+
+        }
+    
+    }
+
+    if (Embeds.length === 0){return "No events scheduled on " + date}
+
+    return {embeds: Embeds};
 
 }
 

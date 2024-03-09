@@ -16,8 +16,11 @@ const UtilFuncs = {
     },
 
     time: {
+
         date : getCurrentDate,
-        previousDate : getPreviousDate
+        previousDate : getPreviousDate,
+        getTimeDif: getTimeDifference
+
     },
 
     alcuin: {
@@ -104,6 +107,18 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
 }
 
+async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
+
+    let [country, city, format,_] = args;
+    if (!city || !country) {return;}
+    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
+    const response = await data.json();
+    let date = new Date();
+
+    return response.hour - date.getHours();
+
+}
+
 function getPreviousDate(){
 
     let date = new Date();
@@ -128,9 +143,10 @@ function getPreviousDate(){
 
 }
 
-function getEventsFromIcs(file){
+async function getEventsFromIcs(file){
     const events = []; 
     let event = {};
+    const timeDifference = await getTimeDifference();
 
     for (let line of file){
 
@@ -147,18 +163,21 @@ function getEventsFromIcs(file){
             event.date.year = line.slice(8,12);
             event.date.month = line.slice(12, 14);
             event.date.day = line.slice(14,16);
-            event.start.hour = line.slice(17,19);
+            event.date.dateFr = event.date.day + "/" + line.slice(12, 14) + "/" + line.slice(8,12);
+            event.start.hour = (line.slice(17,19) - timeDifference).toString();
             event.start.minutes = line.slice(19,21);
 
         }
 
         else if(line.includes("DTEND")){
 
-            event.end.hour = line.slice(15,17);
+            event.end.hour = (line.slice(15,17) - timeDifference).toString();
             event.end.minutes = line.slice(17,19);
 
         }
+        
     }
+
     return events;
 }
 
