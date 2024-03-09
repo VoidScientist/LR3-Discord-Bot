@@ -43,10 +43,10 @@ function getCommands() {
 
 function pickRandom(){
 
-    let keys = Object.keys(Commands).slice(hidden.length + 1)
-    let selected = UtilFuncs.rand.arrayPickRand(keys)
+    let keys = Object.keys(Commands).slice(hidden.length + 1);
+    let selected = UtilFuncs.rand.arrayPickRand(keys);
 
-    return Commands[selected]()
+    return Commands[selected]();
 
 
 }
@@ -113,9 +113,9 @@ function getBocchi(){
         "https://i0.wp.com/anitrendz.net/news/wp-content/uploads/2023/03/hitori-gotou-dead.png?resize=650%2C366&ssl=1",
         "https://preview.redd.it/omori-inspired-bocchi-meme-i-made-a-few-months-ago-v0-ncfpj91oy7ja1.jpg?width=640&crop=smart&auto=webp&s=14bb1b5878a69ad24cc7c80c57293c42d7d7277b",
         "https://cdn.epicstream.com/images/ncavvykf/epicstream/dbfc4525f1e24613c4edd4607d1a441abb2af670-1280x720.jpg?rect=0,24,1280,672&w=1200&h=630&auto=format"
-    ]
+    ];
 
-    return UtilFuncs.rand.arrayPickRand(faces)
+    return UtilFuncs.rand.arrayPickRand(faces);
 
 }
 
