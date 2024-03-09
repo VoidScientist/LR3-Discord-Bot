@@ -223,7 +223,7 @@ async function getStockRate(args){
     
     if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
 
-    return `Open price of ${stock} : ${data.open}$ on ${formattedDate}` ; 
+    return `Open price of ${stock}$ : ${data.open}$ on ${formattedDate}` ; 
 
 }
 
