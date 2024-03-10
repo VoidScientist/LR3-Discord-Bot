@@ -152,8 +152,6 @@ async function getEventsFromIcs(file){
     let event = {};
     const timeDifference = await getTimeDifference();
 
-    if (!file) {return "hello";}
-
     for (let line of file){
 
         if (line == 'BEGIN:VEVENT\r'){event = {subject:"", location:"", date:{}, start:{}, end:{}};} 
