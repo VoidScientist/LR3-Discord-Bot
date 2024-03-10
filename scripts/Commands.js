@@ -1,6 +1,7 @@
 import UtilFuncs from "./UtilFuncs.js";
 import { EmbedBuilder, formatEmoji } from "discord.js";
 import * as fs from "fs";
+import { PokeCard } from "../pokemonCardGame/PokeCard.js";
 
 const hidden = ["konami", "sis", "rin", "kurisutina", "help", "bocchi"];
 
@@ -203,17 +204,27 @@ async function getTranslation(args = ["morse", "Maybe a konami code is hiding so
     return translate.contents.translated;
 }
 
-async function getPokemonEmbed(args = ["charizard"]) {
+async function getPokemonEmbed(args) {
     
+    if (args.length === 0) {args = ["charizard"];}
+
     let [name, _] = args;
 
     name = name.toLowerCase();
 
     const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    
+    let pokemonData;
 
-    const pokemonData = await pokemon.json();
+    try {
 
-    if (pokemonData == "Not Found") {return;}
+        pokemonData = await pokemon.json()
+
+    } catch(err) {
+
+        return "An error occurred, try again.";
+
+    }
 
     const pokemonFormUrl = pokemonData.forms[0].url;
 
@@ -223,20 +234,11 @@ async function getPokemonEmbed(args = ["charizard"]) {
 
     const sprite = pokemonFormData.sprites.front_default;
 
-    const exampleEmbed = new EmbedBuilder()
-	.setColor(0xed2c28)
-	.setTitle(name)
-	.setThumbnail(sprite)
-    .addFields(
-        {name: "HP", value: pokemonData.stats[0].base_stat.toString()},
-        {name: "Attack", value: pokemonData.stats[1].base_stat.toString()},
-        {name: "Defense", value: pokemonData.stats[2].base_stat.toString()},
-        {name: "Sp. Attack", value: pokemonData.stats[3].base_stat.toString()},
-        {name: "Sp. Defense", value: pokemonData.stats[4].base_stat.toString()},
-        {name: "Speed", value: pokemonData.stats[5].base_stat.toString()}
-    );
+    const card = new PokeCard(name, sprite)
 
-    return {embeds: [exampleEmbed]};
+    const embed = card.generateEmbed();
+
+    return {embeds: [embed]};
 
 }
 
