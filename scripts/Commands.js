@@ -126,7 +126,6 @@ function getBocchi(){
 
 function getKonami(args, message) {
 
-    // TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
     const jsonFile = "./storage.json";
 
     const jsonData = fs.readFileSync(jsonFile);
@@ -287,20 +286,19 @@ async function getSchedule(args = "04/04/2024") {
 
     const Embeds = [];
 
-    // TODO: i is not the most understandable name
-    for(let i of schedule) {
+    for(let event of schedule) {
 
-        if(i.date.dateFr === date) {
+        if(event.date.dateFr === date) {
 
             const eventEmbed = new EmbedBuilder()
             .setColor(0xed7f10)
-            .setTitle(i.subject)
+            .setTitle(event.subject)
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
-                {name: "Starts at", value: i.start.hour + "h" + i.start.minutes},
-                {name: "Ends at", value: i.end.hour + "h" + i.end.minutes},
-                {name: "Location", value: i.location},
-                {name: "Date", value: i.date.dateFr}
+                {name: "Starts at", value: event.start.hour + "h" + event.start.minutes},
+                {name: "Ends at", value: event.end.hour + "h" + event.end.minutes},
+                {name: "Location", value: event.location},
+                {name: "Date", value: event.date.dateFr}
             );
 
             Embeds.push(eventEmbed);
