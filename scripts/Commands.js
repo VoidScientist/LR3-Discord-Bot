@@ -274,10 +274,13 @@ async function getSchedule(args = "04/04/2024") {
     if (date.length !== 10){return "Please enter the date in dd/mm/yyyy format";}
     
     for (let i = 0; i < date.length; i++){
-        console.log(date[i]);
+
         if (!(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(date[i]) || ((i === 2 || i === 5) && date[i] === "/" ))){
+
             return "Please enter the date in dd/mm/yyyy format";
+            
         }
+
     }
 
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
