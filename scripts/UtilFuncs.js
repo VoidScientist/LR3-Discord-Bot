@@ -99,8 +99,11 @@ function pickRandomInArray(array) {
 async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
     let [country, city, format,_] = args;
+
     if (!city || !country) {return;}
+
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
+    
     const response = await data.json();
 
     return response.formatted;
@@ -110,9 +113,13 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
 
     let [country, city, format,_] = args;
+
     if (!city || !country) {return;}
+
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
+    
     const response = await data.json();
+    
     let date = new Date();
 
     return response.hour - date.getHours();

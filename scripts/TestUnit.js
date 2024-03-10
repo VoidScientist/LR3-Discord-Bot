@@ -97,6 +97,10 @@ const tests = [
         func: Commands.stock,
         parameter: ["gegzge", "yes"],
         expected : "gegzge either isn't on the stockmarket or doesn't exist."
+    },
+    {
+        func: UtilFuncs.alcuin.icsFileToList,
+        
     }
 
 ];
@@ -138,6 +142,8 @@ function checkResultType(result, test, testNum) {
 
 function checkResultValue(result, test, testNum) {
 
+    console.log(result, test.expected)
+
     if (result !== test.expected) {
     
         throw new Error(
@@ -161,7 +167,7 @@ async function checkTestCases() {
     
         checkingTypes[checkType](result, tests[i], i + 1);
     
-        console.log(`[${tests[i].func.name}] Test ${i+1} passed in ${duration} ms.`);
+        console.log(`[${tests[i].func.name}] Test ${i + 1} passed in ${duration} ms.`);
         
     }
 
