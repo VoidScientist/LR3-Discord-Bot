@@ -37,7 +37,7 @@ function getCommands() {
         if (hidden.includes(keys[i])) { continue; }
 
         res += `- !${keys[i]}`;
-        
+
         res += i + 1 < keys.length ? "\n" : ""; 
 
     }
@@ -287,6 +287,7 @@ async function getSchedule(args = "04/04/2024") {
 
     const Embeds = [];
 
+    // TODO: i is not the most understandable name
     for(let i of schedule) {
 
         if(i.date.dateFr === date) {

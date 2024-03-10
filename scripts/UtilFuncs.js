@@ -77,7 +77,6 @@ function arrayToUrlEncoded(array) {
 
 }
 
-
 function randRange(start, end) {
 
     return Math.floor(Math.random() * (end-start)) + start;
@@ -94,9 +93,12 @@ function pickRandomInArray(array) {
 
 async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
-    let [country, city, format,_] = args;
+    let [country, city, format, _] = args;
+
     if (!city || !country) {return;}
+
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
+    
     const response = await data.json();
 
     return response.formatted;
@@ -105,10 +107,14 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
 async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
 
-    let [country, city, format,_] = args;
+    let [country, city, format, _] = args;
+
     if (!city || !country) {return;}
+
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
+    
     const response = await data.json();
+    
     let date = new Date();
 
     return response.hour - date.getHours();
@@ -125,6 +131,7 @@ function getPreviousDate(){
     let month = date.getMonth();
     let year = date.getFullYear();
 
+    // TODO: I'm sure you can handle these cases better
     if (day < 10){
 
         day = `0${day}`;
@@ -139,6 +146,7 @@ function getPreviousDate(){
 
 }
 
+// TODO: too much slicing, make it clearer.
 async function getEventsFromIcs(file){
     const events = []; 
     let event = {};
