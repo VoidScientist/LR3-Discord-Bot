@@ -296,7 +296,7 @@ async function getSchedule(args = "04/04/2024") {
     for(let event of schedule) {
 
         if(event.date.dateFr === date) {
-
+            
             const eventEmbed = new EmbedBuilder()
             .setColor(0xed7f10)
             .setTitle(event.subject)
@@ -304,7 +304,7 @@ async function getSchedule(args = "04/04/2024") {
             .addFields(
                 {name: "Starts at", value: event.start.hour + "h" + event.start.minutes},
                 {name: "Ends at", value: event.end.hour + "h" + event.end.minutes},
-                {name: "Location", value: event.location},
+                {name: "Location", value: event.location === '' ? "No location provided" : event.location},
                 {name: "Date", value: event.date.dateFr}
             );
 
