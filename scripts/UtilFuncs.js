@@ -77,7 +77,6 @@ function arrayToUrlEncoded(array) {
 
 }
 
-
 function randRange(start, end) {
 
     return Math.floor(Math.random() * (end-start)) + start;
@@ -132,6 +131,7 @@ function getPreviousDate(){
     let month = date.getMonth();
     let year = date.getFullYear();
 
+    // TODO: I'm sure you can handle these cases better
     if (day < 10){
 
         day = `0${day}`;
@@ -146,6 +146,7 @@ function getPreviousDate(){
 
 }
 
+// TODO: too much slicing, make it clearer.
 async function getEventsFromIcs(file){
     const events = []; 
     let event = {};
