@@ -36,6 +36,7 @@ function getCommands() {
         if (hidden.includes(keys[i])) { continue; }
 
         res += `- !${keys[i]}`;
+        
         res += i + 1 < keys.length ? "\n" : ""; 
 
     }
@@ -158,13 +159,27 @@ async function getChuckFact(){
 
 async function getTranslation(args = ["morse", "Maybe a konami code is hiding somewhere..."]) {
 
-    const languages = ["yoda", "oldenglish", "pirate", "minion", "morse", "russian-accent", "german-accent"]
+    const languages = [
+            "yoda", 
+            "oldenglish",
+            "pirate",
+            "minion",
+            "morse",
+            "russian-accent",
+            "german-accent"
+        ]
 
     const language = args[0];
 
     const encodedMessage = UtilFuncs.conv.arrayToUrl(args.splice(1));
 
-    if(!languages.includes(language)) {return "Language not supported. Try: " + languages[UtilFuncs.rand.randRange(0, languages.length-1)];}
+    if(!languages.includes(language)) {
+
+        const randLanguage = languages[UtilFuncs.rand.randRange(0, languages.length-1)];
+
+        return "Language not supported. Try: " + randLanguage;
+
+    }
 
     let link = "https://api.funtranslations.com/translate/" + language + "?text=";
     
@@ -179,7 +194,6 @@ async function getTranslation(args = ["morse", "Maybe a konami code is hiding so
 
 async function getPokemonEmbed(args = ["charizard"]) {
     
-
     let [name, _] = args;
 
     name = name.toLowerCase();
@@ -212,19 +226,21 @@ async function getPokemonEmbed(args = ["charizard"]) {
 
 async function getStockRate(args){
 
-    let [stock,_] = args
+    let [stock, _] = args;
 
     const apiKey = "aqlJ4KAyAUR0r_ludhGGyti_nRpJhDxD";
 
-    const formattedDate = UtilFuncs.time.previousDate()
+    const formattedDate = UtilFuncs.time.previousDate();
 
     const response = await fetch(`https://api.polygon.io/v1/open-close/${stock}/${formattedDate}?adjusted=true&apiKey=${apiKey}`);
 
     const data = await response.json();
     
-    if (data.status === "NOT_FOUND" || data.open === undefined) {return `${stock} either isn't on the stockmarket or doesn't exist.`}
+    if (data.status === "NOT_FOUND" || data.open === undefined) {
+        return `${stock} either isn't on the stockmarket or doesn't exist.`;
+    }
 
-    const colors = ["#7f219c", "#d96f8d","#6cc45a","#2b30c2"]
+    const colors = ["#7f219c", "#d96f8d","#6cc45a","#2b30c2"];
 
     const exampleEmbed = new EmbedBuilder()
 	.setColor(UtilFuncs.rand.arrayPickRand(colors))
@@ -242,25 +258,27 @@ async function getStockRate(args){
 
 async function getSchedule(args = "04/04/2024") {
 
-    if (args.length === 0){var date = await UtilFuncs.time.date();}
+    const [date, _] = args.length === 0 ? await UtilFuncs.time.date : args;
 
-    else {var [date,_] = args}
-
-    if(date.length !== 10){return "Please enter the date in dd/mm/yyyy format"}
+    // TODO: add parsing instead of using hardcoded 10 chars
+    if(date.length !== 10) {
+        return "Please enter the date in dd/mm/yyyy format";
+    }
 
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
 
     const icsFile = await response.text();
 
-    let parsed = icsFile.split("\n");
-    
-    let schedule = await UtilFuncs.conv.icsFileToList(parsed);
+    const parsed = icsFile.split("\n");
+
+    const schedule = await UtilFuncs.conv.icsFileToList(parsed);
 
     const Embeds = [];
 
-    for(let i of schedule){
+    for(let i of schedule) {
 
-        if(i.date.dateFr === date){
+        if(i.date.dateFr === date) {
+
             const eventEmbed = new EmbedBuilder()
             .setColor(0xed7f10)
             .setTitle(i.subject)
@@ -278,7 +296,9 @@ async function getSchedule(args = "04/04/2024") {
     
     }
 
-    if (Embeds.length === 0){return "No events scheduled on " + date}
+    if (Embeds.length === 0) {
+        return "No events scheduled on " + date;
+    }
 
     return {embeds: Embeds};
 
