@@ -98,19 +98,20 @@ const tests = [
         parameter: ["gegzge", "yes"],
         expected : "gegzge either isn't on the stockmarket or doesn't exist."
     },
-    /*{
-        func: UtilFuncs.conv.icsFileToList,
-        parameter: [],
-        expected: []
-    },
-    {
-        func: UtilFuncs.conv.icsFileToList,
-        parameter: ["BEGIN:VEVENT\r", "SUMMARY:2000 year's bug", "LOCATION:Earth", "END:VEVENT\r"],
-        expected: [{subject:"2000 year's bug", location:"Earth"}]
-    }*/
+    // {
+    //     func: UtilFuncs.conv.icsFileToList,
+    //     parameter: [],
+    //     expected: []
+    // },
+    // {
+    //     func: UtilFuncs.conv.icsFileToList,
+    //     parameter: ["BEGIN:VEVENT\r", "SUMMARY:2000 year's bug", "LOCATION:Earth", "END:VEVENT\r"],
+    //     expected: [{subject:"2000 year's bug", location:"Earth"}]
+    // },
 
 ];
 
+// TODO: add object equality
 const checkingTypes = {
 
     value: checkResultValue,
@@ -124,7 +125,7 @@ async function timeExecution(func, parameter) {
     let start = performance.now();
 
     let result = await func(parameter);
-
+    
     let end = performance.now();
 
     return [result, (end-start).toFixed(2)];
@@ -147,8 +148,6 @@ function checkResultType(result, test, testNum) {
 }
 
 function checkResultValue(result, test, testNum) {
-
-    console.log(result, test.expected)
 
     if (result !== test.expected) {
     

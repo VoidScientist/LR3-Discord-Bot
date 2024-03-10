@@ -93,7 +93,7 @@ function pickRandomInArray(array) {
 
 async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
-    let [country, city, format,_] = args;
+    let [country, city, format, _] = args;
 
     if (!city || !country) {return;}
 
@@ -107,7 +107,7 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
 
 async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
 
-    let [country, city, format,_] = args;
+    let [country, city, format, _] = args;
 
     if (!city || !country) {return;}
 
@@ -151,6 +151,8 @@ async function getEventsFromIcs(file){
     const events = []; 
     let event = {};
     const timeDifference = await getTimeDifference();
+
+    if (!file) {return "hello";}
 
     for (let line of file){
 

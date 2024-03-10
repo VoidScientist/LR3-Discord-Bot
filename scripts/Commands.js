@@ -36,7 +36,7 @@ function getCommands() {
         if (hidden.includes(keys[i])) { continue; }
 
         res += `- !${keys[i]}`;
-        
+
         res += i + 1 < keys.length ? "\n" : ""; 
 
     }
@@ -260,6 +260,8 @@ async function getSchedule(args = "04/04/2024") {
 
     const [date, _] = args.length === 0 ? await UtilFuncs.time.date : args;
 
+    console.log(date)
+
     // TODO: add parsing instead of using hardcoded 10 chars
     if(date.length !== 10) {
         return "Please enter the date in dd/mm/yyyy format";
@@ -275,6 +277,7 @@ async function getSchedule(args = "04/04/2024") {
 
     const Embeds = [];
 
+    // TODO: i is not the most understandable name
     for(let i of schedule) {
 
         if(i.date.dateFr === date) {
