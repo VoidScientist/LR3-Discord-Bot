@@ -228,7 +228,12 @@ async function getPokemonEmbed(args = ["charizard"]) {
 	.setTitle(name)
 	.setThumbnail(sprite)
     .addFields(
-        {name: "HP", value: pokemonData.stats[0].base_stat.toString()}
+        {name: "HP", value: pokemonData.stats[0].base_stat.toString()},
+        {name: "Attack", value: pokemonData.stats[1].base_stat.toString()},
+        {name: "Defense", value: pokemonData.stats[2].base_stat.toString()},
+        {name: "Sp. Attack", value: pokemonData.stats[3].base_stat.toString()},
+        {name: "Sp. Defense", value: pokemonData.stats[4].base_stat.toString()},
+        {name: "Speed", value: pokemonData.stats[5].base_stat.toString()}
     );
 
     return {embeds: [exampleEmbed]};
@@ -275,7 +280,7 @@ async function getSchedule(args = "04/04/2024") {
     
     for (let i = 0; i < date.length; i++){
 
-        if (!(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(date[i]) || ((i === 2 || i === 5) && date[i] === "/" ))){
+        if (!((["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(date[i]) && !(i === 2 || i === 5)) || ((i === 2 || i === 5) && date[i] === "/" ))){
 
             return "Please enter the date in dd/mm/yyyy format";
             
