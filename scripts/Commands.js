@@ -1,5 +1,6 @@
 import UtilFuncs from "./UtilFuncs.js";
 import { EmbedBuilder, formatEmoji } from "discord.js";
+import * as fs from "fs";
 
 const hidden = ["konami", "sis", "rin", "kurisutina", "help", "bocchi"];
 
@@ -123,11 +124,22 @@ function getBocchi(){
 
 }
 
-function getKonami() {
+function getKonami(args, message) {
 
     // TODO: MAKE IT SO THAT USER IS ADDED TO A DATABASE
+    const jsonFile = "./storage.json";
 
-    return "Thou hast successfully transcended the realm of humanity.";
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    if (data["konami"].includes(message.author.id)){return;}
+
+    else{data.konami.push(message.author.id);}
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "Thou hast successfully transcended the realm of humanity. ";
 
 }
 
@@ -257,8 +269,8 @@ async function getStockRate(args){
 }
 
 async function getSchedule(args = "04/04/2024") {
-
-    const [date, _] = args.length === 0 ? await UtilFuncs.time.date : args;
+    
+    const [date, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
 
     // TODO: add parsing instead of using hardcoded 10 chars
     if(date.length !== 10) {
@@ -284,7 +296,7 @@ async function getSchedule(args = "04/04/2024") {
             .setTitle(i.subject)
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
-                {name: "Starts at:", value: i.start.hour + "h" + i.start.minutes},
+                {name: "Starts at", value: i.start.hour + "h" + i.start.minutes},
                 {name: "Ends at", value: i.end.hour + "h" + i.end.minutes},
                 {name: "Location", value: i.location},
                 {name: "Date", value: i.date.dateFr}

@@ -49,7 +49,7 @@ async function handleMessage(message) {
         return;
     }
 
-    message.channel.send(await func(args));
+    message.channel.send(await func(args, message));
 
     message.delete(1000);
     
