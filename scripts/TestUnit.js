@@ -98,10 +98,16 @@ const tests = [
         parameter: ["gegzge", "yes"],
         expected : "gegzge either isn't on the stockmarket or doesn't exist."
     },
+    /*{
+        func: UtilFuncs.conv.icsFileToList,
+        parameter: [],
+        expected: []
+    },
     {
-        func: UtilFuncs.alcuin.icsFileToList,
-        
-    }
+        func: UtilFuncs.conv.icsFileToList,
+        parameter: ["BEGIN:VEVENT\r", "SUMMARY:2000 year's bug", "LOCATION:Earth", "END:VEVENT\r"],
+        expected: [{subject:"2000 year's bug", location:"Earth"}]
+    }*/
 
 ];
 

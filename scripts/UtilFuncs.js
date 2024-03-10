@@ -5,6 +5,7 @@ const UtilFuncs = {
         objToUrl: objectToUrlEncoded,
         strToUrl: strToUrlEncoded,
         arrayToUrl: arrayToUrlEncoded,
+        icsFileToList: getEventsFromIcs
 
     },
 
@@ -21,12 +22,7 @@ const UtilFuncs = {
         previousDate : getPreviousDate,
         getTimeDif: getTimeDifference
 
-    },
-
-    alcuin: {
-        icsFileToList: getEventsFromIcs
     }
-
 
 };
 

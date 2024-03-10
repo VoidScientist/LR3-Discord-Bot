@@ -270,8 +270,8 @@ async function getSchedule(args = "04/04/2024") {
     const icsFile = await response.text();
 
     const parsed = icsFile.split("\n");
-    
-    const schedule = await UtilFuncs.alcuin.icsFileToList(parsed);
+
+    const schedule = await UtilFuncs.conv.icsFileToList(parsed);
 
     const Embeds = [];
 
