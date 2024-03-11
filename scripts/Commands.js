@@ -17,6 +17,7 @@ const Commands = {
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
+    "itiswhatitis" : getShrug,
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
@@ -93,6 +94,12 @@ function getCrackhead(){
     ];
 
     return UtilFuncs.rand.arrayPickRand(faces);
+
+}
+
+function getShrug(){
+
+    return '¯\\\_(ツ)\_/¯'
 
 }
 
