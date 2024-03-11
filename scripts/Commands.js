@@ -22,7 +22,8 @@ const Commands = {
     "translate": getTranslation,
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
-    "schedule": getSchedule
+    "schedule": getSchedule,
+    "character" : getRandomCharacter
 
 };
 
@@ -326,6 +327,27 @@ async function getSchedule(args = "04/04/2024") {
     }
 
     return {embeds: Embeds};
+
+}
+
+function getRandomCharacter(args){
+
+    let [name, classes, illness,_] = args.toString().split("/");
+
+    const selectedName = UtilFuncs.rand.arrayPickRand(name.split(","));
+    const selectedCLass = UtilFuncs.rand.arrayPickRand(classes.split(","));
+    const selectedIll = UtilFuncs.rand.arrayPickRand(illness.split(","));
+
+    const card = new EmbedBuilder()
+    .setColor("#9b32a8")
+    .setTitle(selectedName)
+    .setThumbnail("https://images.assetsdelivery.com/compings_v2/tarasdubov/tarasdubov2211/tarasdubov221100361.jpg")
+    .addFields(
+        {name: "Class", value: selectedCLass},
+        {name: "Illness", value: selectedIll}
+    )
+
+    return {embeds : [card]}
 
 }
 
