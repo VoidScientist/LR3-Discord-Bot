@@ -91,7 +91,9 @@ function getCrackhead(){
     const faces = [
         "https://media.licdn.com/dms/image/D5603AQEvSpL_oIWQoQ/profile-displayphoto-shrink_200_200/0/1697897875335?e=1715212800&v=beta&t=0dnrdFpaVr1t1sJM3YKI4CqFHvDAWmRuO6fWLAmtTic",
         "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU",
-        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI"
+        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI",
+        "https://cdn.discordapp.com/attachments/1184200623529410611/1216769735467864094/IMG_20240311_112822.jpg?ex=6601981f&is=65ef231f&hm=753b247d360dbdecfdff2a563b91204dd5db874b7d5b4db941d33eebdf4b2cca&"
+        
     ];
 
     return UtilFuncs.rand.arrayPickRand(faces);
