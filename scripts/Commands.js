@@ -24,7 +24,8 @@ const Commands = {
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
     "schedule": getSchedule,
-    "character" : getRandomCharacter
+    "character" : getRandomCharacter,
+    "trivia" : getTrivia
 
 };
 
@@ -355,6 +356,22 @@ function getRandomCharacter(args){
     )
 
     return {embeds : [card]}
+
+}
+
+async function getTrivia(){
+
+    const response = await fetch("https://the-trivia-api.com/v2/questions/");
+
+    const trivia = await response.json();
+
+    if(!trivia[0].question.text) {return;}
+
+    let res;
+
+    return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";
+
+    
 
 }
 
