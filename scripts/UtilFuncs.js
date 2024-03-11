@@ -18,8 +18,8 @@ const UtilFuncs = {
 
     time: {
 
-        date : getCurrentDate,
-        previousDate : getPreviousDate,
+        date : getDateAt,
+        yesterday : getYesterday,
         getTimeDif: getTimeDifference
 
     }
@@ -91,7 +91,7 @@ function pickRandomInArray(array) {
 
 }
 
-async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
+async function getDateAt(args = ["France","Lille", "dd/MM/yyyy"]){
 
     let [country, city, format, _] = args;
 
@@ -121,26 +121,15 @@ async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
 
 }
 
-function getPreviousDate(){
+function getYesterday(){
 
     let date = new Date();
                       
     date.setDate(date.getDate() - 1);
 
-    let day = date.getDate();
-    let month = date.getMonth();
+    let day = date.getDate().toString().padStart(2, "0");
+    let month = date.getMonth().toString().padStart(2, "0");
     let year = date.getFullYear();
-
-    // TODO: I'm sure you can handle these cases better
-    if (day < 10){
-
-        day = `0${day}`;
-    }
-
-    if (month < 10){
-
-        month = `0${month}`;
-    }
     
     return `${year}-${month}-${day}`;
 
@@ -148,7 +137,7 @@ function getPreviousDate(){
 
 // TODO: too much slicing, make it clearer.
 async function getEventsFromIcs(file) {
-    
+
     const events = []; 
     let event = {};
     const timeDifference = await getTimeDifference();
@@ -195,8 +184,6 @@ async function getEventsFromIcs(file) {
 
     return events;
 }
-
-
 
 
 export default UtilFuncs;

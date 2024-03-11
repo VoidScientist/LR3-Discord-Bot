@@ -248,7 +248,7 @@ async function getStockRate(args){
 
     const apiKey = "aqlJ4KAyAUR0r_ludhGGyti_nRpJhDxD";
 
-    const formattedDate = UtilFuncs.time.previousDate();
+    const formattedDate = UtilFuncs.time.yesterday();
 
     const response = await fetch(`https://api.polygon.io/v1/open-close/${stock}/${formattedDate}?adjusted=true&apiKey=${apiKey}`);
 
