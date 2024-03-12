@@ -27,7 +27,8 @@ const Commands = {
     "setschedule": setSchedule,
     "unsetschedule": unsetSchedule,
     "character" : getRandomCharacter,
-    "trivia" : getTrivia
+    "trivia" : getTrivia,
+    "weather": getWeather
 
 };
 
@@ -409,9 +410,82 @@ async function getTrivia(){
 
     let res;
 
-    return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";
+    return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";    
 
-    
+}
+
+async function getWeather(args){
+
+    const [latitude, longitude, _] = args.length === 0 ? [50.633333, 3.066667]:args;
+
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min`);
+
+    const weather = await response.json();
+
+    const weatherIconsURL = {
+        "sunny": "https://em-content.zobj.net/source/microsoft-teams/337/sun_2600-fe0f.png",
+        "sunny/cloudy": "https://em-content.zobj.net/source/microsoft/379/sun-behind-cloud_26c5.png",
+        "cloudy": "https://em-content.zobj.net/source/microsoft/379/cloud_2601-fe0f.png",
+        "sunny/rainy": "https://em-content.zobj.net/source/microsoft/379/sun-behind-rain-cloud_1f326-fe0f.png",
+        "rainy": "https://em-content.zobj.net/source/microsoft/379/cloud-with-rain_1f327-fe0f.png",
+        "thunder": "https://em-content.zobj.net/source/microsoft/379/cloud-with-lightning-and-rain_26c8-fe0f.png",
+        "snow": "https://em-content.zobj.net/source/microsoft/379/cloud-with-snow_1f328-fe0f.png",
+        "snow/rain": "https://cdn3d.iconscout.com/3d/premium/thumb/windy-weather-7814453-6267527.png?f=webp",
+        "fog": "https://cdn3d.iconscout.com/3d/premium/thumb/foggy-weather-7375366-5979320.png?f=webp",
+        "undetermined": "https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-3d/512/Red-Question-Mark-3d-icon.png"
+    }
+
+    const embedList = [];
+
+    for (let i = 0; i<weather.daily.time.length; i++){
+        
+        const code = weather.daily.weather_code[i];
+
+        let icon = "";
+
+        if (code == 0){
+            icon = weatherIconsURL["sunny"];
+        }
+        else if ([1, 2, 3].includes(code)){
+            icon = weatherIconsURL["sunny/cloudy"];
+        }
+        else if ([45, 48].includes(code)){
+            icon = weatherIconsURL["fog"];
+        }
+        else if ([51, 53, 55].includes(code)){
+            icon = weatherIconsURL["sunny/rainy"];
+        }
+        else if ([61, 63, 65, 80, 81, 82].includes(code)){
+            icon = weatherIconsURL["rainy"];
+        }
+        else if ([56, 57, 66, 67].includes(code)){
+            icon = weatherIconsURL["snow/rain"];
+        }
+        else if ([71, 73, 75, 77, 85, 86].includes(code)){
+            icon = weatherIconsURL["snow"];
+        }
+        else if ([95, 96, 99].includes(code)){
+            icon = weatherIconsURL["thunder"];
+        }
+        else {
+            icon = weatherIconsURL["undetermined"];
+        }
+
+        const weatherEmbed = new EmbedBuilder()
+        .setColor(0x34aeeb)
+        .setThumbnail(icon)
+        .setTitle(`Weather on the ${weather.daily.time[i]}`)
+        .addFields(
+            {name: "Maximal temperature", value: weather.daily.temperature_2m_max[i].toString()},
+            {name: "Minimal temperature", value: weather.daily.temperature_2m_min[i].toString()},
+            {name: "Weather code", value: weather.daily.weather_code[i].toString()}
+        );
+        
+        embedList.push(weatherEmbed);
+
+    }
+
+    return {embeds: embedList};
 
 }
 
