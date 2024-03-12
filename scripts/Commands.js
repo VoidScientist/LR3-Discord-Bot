@@ -416,9 +416,13 @@ async function getTrivia(){
 
 async function getWeather(args){
 
-    const [latitude, longitude, _] = args.length === 0 ? [50.633333, 3.066667]:args;
+    const [location, _] = args.length === 0 ? ["Lille"] : args;
 
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min`);
+    const [latitude, longitude] = await UtilFuncs.location.coordinates(location);
+
+    if(latitude === "" || longitude === ""){return "The location is not registered"}
+
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max`);
 
     const weather = await response.json();
 
@@ -446,8 +450,11 @@ async function getWeather(args){
         if (code == 0){
             icon = weatherIconsURL["sunny"];
         }
-        else if ([1, 2, 3].includes(code)){
+        else if ([1, 2].includes(code)){
             icon = weatherIconsURL["sunny/cloudy"];
+        }
+        else if (code === 3) {
+            icon = weatherIconsURL["cloudy"];
         }
         else if ([45, 48].includes(code)){
             icon = weatherIconsURL["fog"];
@@ -474,11 +481,12 @@ async function getWeather(args){
         const weatherEmbed = new EmbedBuilder()
         .setColor(0x34aeeb)
         .setThumbnail(icon)
-        .setTitle(`Weather on the ${weather.daily.time[i]}`)
+        .setTitle(`Weather at ${location} on the ${weather.daily.time[i]}`)
         .addFields(
             {name: "Maximal temperature", value: weather.daily.temperature_2m_max[i].toString()},
             {name: "Minimal temperature", value: weather.daily.temperature_2m_min[i].toString()},
-            {name: "Weather code", value: weather.daily.weather_code[i].toString()}
+            {name: "Max precipitation probability", value: `${weather.daily.precipitation_probability_max[i]}%`},
+            {name: "Weather code", value: code.toString()}
         );
         
         embedList.push(weatherEmbed);

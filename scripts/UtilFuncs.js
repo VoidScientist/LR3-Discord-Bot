@@ -22,6 +22,10 @@ const UtilFuncs = {
         previousDate : getPreviousDate,
         getTimeDif: getTimeDifference
 
+    },
+
+    location: {
+        coordinates: getCoordinates,
     }
 
 };
@@ -186,6 +190,18 @@ async function getEventsFromIcs(file) {
     }
 
     return events;
+}
+
+async function getCoordinates(location){
+
+    const response  = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
+
+    const data = await response.json();
+
+    if(data.hasOwnProperty("results")){return [data.results[0].latitude, data.results[0].longitude];}
+
+    return ["",""];
+
 }
 
 
