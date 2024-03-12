@@ -24,9 +24,10 @@ const Commands = {
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
     "schedule": getSchedule,
+    "setschedule": setSchedule,
+    "unsetschedule": unsetSchedule,
     "character" : getRandomCharacter,
-    "trivia" : getTrivia,
-    "setschedule": setSchedule
+    "trivia" : getTrivia
 
 };
 
@@ -341,6 +342,42 @@ async function getSchedule(args = "04/04/2024") {
 
 }
 
+function setSchedule(args, message){
+
+    const serverId = message.guildId;
+    const channelId = message.channelId;
+
+    const jsonFile = "./storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    data.autoScheduleChannels[serverId] = channelId;
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "This channel has been set to display the schedule."
+
+}
+
+function unsetSchedule(args, message){
+
+    const serverId = message.guildId;
+
+    const jsonFile = "./storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    delete data.autoScheduleChannels[serverId];
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "This channel has been unset to display the schedule."
+}
+
 function getRandomCharacter(args){
 
     let [name, classes, illness,_] = args.toString().split("/");
@@ -375,26 +412,6 @@ async function getTrivia(){
     return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";
 
     
-
-}
-
-//TODO: Add unsetSchedule
-function setSchedule(args, message){
-
-    const serverId = message.guildId;
-    const channelId = message.channelId;
-
-    const jsonFile = "./storage.json";
-
-    const jsonData = fs.readFileSync(jsonFile);
-
-    const data = JSON.parse(jsonData);
-
-    data.scheduleChannels[serverId] = channelId;
-
-    fs.writeFileSync(jsonFile, JSON.stringify(data));
-
-    return "This channel has been set to display the schedule."
 
 }
 

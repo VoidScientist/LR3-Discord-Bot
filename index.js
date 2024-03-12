@@ -70,11 +70,11 @@ async function autoSchedule(){
 
     const data = JSON.parse(jsonData);
 
-    for (let guildId in data.scheduleChannels){
+    for (let guildId in data.autoScheduleChannels){
 
         const guild = client.guilds.cache.get(guildId);
         
-        const channel = guild.channels.cache.get(data.scheduleChannels[guildId]);
+        const channel = guild.channels.cache.get(data.autoScheduleChannels[guildId]);
 
         let embedList = await Commands["schedule"]([])
 
