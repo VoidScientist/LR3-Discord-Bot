@@ -100,24 +100,16 @@ async function getCurrentDate(args = ["France","Lille", "dd/MM/yyyy"]){
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
     
     const response = await data.json();
-
+    
     return response.formatted;
 
 }
 
-async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
+function getTimeDifference(){
 
-    let [country, city, format, _] = args;
-
-    if (!city || !country) {return;}
-
-    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
-    
-    const response = await data.json();
-    
     let date = new Date();
 
-    return response.hour - date.getHours();
+    return date.getUTCHours() - date.getHours();
 
 }
 

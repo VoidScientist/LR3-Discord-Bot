@@ -1,6 +1,7 @@
 import { ActivityType, Client, Events, GatewayIntentBits } from 'discord.js';
 import CONFIG from './config.json' with {type: "json"};
 import Commands from './scripts/Commands.js';
+import * as fs from "fs";
 
 let self = -1;
 
@@ -55,7 +56,34 @@ async function handleMessage(message) {
     
 }
 
+//TODO:Check that the bot can still access the channel he needs it to send the schedule
+
+async function autoSchedule(){
+    
+    const date = new Date();
+
+    if (date.getHours() != 6){return;}
+
+    const jsonFile = "storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    for (let guildId in data.scheduleChannels){
+
+        const guild = client.guilds.cache.get(guildId);
+        
+        const channel = guild.channels.cache.get(data.scheduleChannels[guildId]);
+
+        let embedList = await Commands["schedule"]([])
+
+        channel.send(embedList);
+
+    }
+    
+}
+
 client.on(Events.MessageCreate, handleMessage);
 client.once(Events.ClientReady, onClientReady);
-
-
+setInterval(autoSchedule, 3600000);

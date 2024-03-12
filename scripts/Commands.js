@@ -22,7 +22,8 @@ const Commands = {
     "translate": getTranslation,
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
-    "schedule": getSchedule
+    "schedule": getSchedule,
+    "setschedule": setSchedule
 
 };
 
@@ -328,7 +329,24 @@ async function getSchedule(args = "04/04/2024") {
     return {embeds: Embeds};
 
 }
+//TODO: Add unsetSchedule
+function setSchedule(args, message){
+
+    const serverId = message.guildId;
+    const channelId = message.channelId;
+
+    const jsonFile = "./storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    data.scheduleChannels[serverId] = channelId;
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "This channel has been set to display the schedule."
+
+}
 
 export default Commands;
-
-
