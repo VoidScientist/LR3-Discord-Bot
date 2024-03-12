@@ -17,12 +17,15 @@ const Commands = {
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
+    "itiswhatitis" : getShrug,
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
     "schedule": getSchedule,
+    "character" : getRandomCharacter,
+    "trivia" : getTrivia,
     "setschedule": setSchedule
 
 };
@@ -89,10 +92,18 @@ function getCrackhead(){
     const faces = [
         "https://media.licdn.com/dms/image/D5603AQEvSpL_oIWQoQ/profile-displayphoto-shrink_200_200/0/1697897875335?e=1715212800&v=beta&t=0dnrdFpaVr1t1sJM3YKI4CqFHvDAWmRuO6fWLAmtTic",
         "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU",
-        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI"
+        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI",
+        "https://cdn.discordapp.com/attachments/1184200623529410611/1216769735467864094/IMG_20240311_112822.jpg?ex=6601981f&is=65ef231f&hm=753b247d360dbdecfdff2a563b91204dd5db874b7d5b4db941d33eebdf4b2cca&"
+        
     ];
 
     return UtilFuncs.rand.arrayPickRand(faces);
+
+}
+
+function getShrug(){
+
+    return '¯\\\_(ツ)\_/¯'
 
 }
 
@@ -329,6 +340,44 @@ async function getSchedule(args = "04/04/2024") {
     return {embeds: Embeds};
 
 }
+
+function getRandomCharacter(args){
+
+    let [name, classes, illness,_] = args.toString().split("/");
+
+    const selectedName = UtilFuncs.rand.arrayPickRand(name.split(","));
+    const selectedCLass = UtilFuncs.rand.arrayPickRand(classes.split(","));
+    const selectedIll = UtilFuncs.rand.arrayPickRand(illness.split(","));
+
+    const card = new EmbedBuilder()
+    .setColor("#9b32a8")
+    .setTitle(selectedName)
+    .setThumbnail("https://images.assetsdelivery.com/compings_v2/tarasdubov/tarasdubov2211/tarasdubov221100361.jpg")
+    .addFields(
+        {name: "Class", value: selectedCLass},
+        {name: "Illness", value: selectedIll}
+    )
+
+    return {embeds : [card]}
+
+}
+
+async function getTrivia(){
+
+    const response = await fetch("https://the-trivia-api.com/v2/questions/");
+
+    const trivia = await response.json();
+
+    if(!trivia[0].question.text) {return;}
+
+    let res;
+
+    return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";
+
+    
+
+}
+
 //TODO: Add unsetSchedule
 function setSchedule(args, message){
 

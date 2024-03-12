@@ -10,7 +10,8 @@ export class PokeCard {
         this.health = health;
         this.attacks = attacks;
 
-        return this
+        return this;
+        
     }
 
     generateEmbed() {
@@ -19,10 +20,12 @@ export class PokeCard {
             return this.embed;
         }
 
-        return new EmbedBuilder()
+        this.embed = new EmbedBuilder()
         .setTitle(this.name)
         .setImage(this.url)
         .setDescription("A Pokemon Card");
+
+        return this.embed;
 
     }
 

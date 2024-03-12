@@ -108,6 +108,7 @@ const tests = [
     //     parameter: ["BEGIN:VEVENT\r", "SUMMARY:2000 year's bug", "LOCATION:Earth", "END:VEVENT\r"],
     //     expected: [{subject:"2000 year's bug", location:"Earth"}]
     // },
+    
 
 ];
 
