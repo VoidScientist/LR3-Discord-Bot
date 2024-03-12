@@ -56,7 +56,7 @@ async function handleMessage(message) {
     
 }
 
-//TODO:Check that the bot can still access the channel he needs it to send the schedule
+//TODO:Check that the bot can still access the channel he needs to send the schedule
 
 async function autoSchedule(){
     
