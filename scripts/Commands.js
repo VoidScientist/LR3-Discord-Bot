@@ -28,7 +28,8 @@ const Commands = {
     "unsetschedule": unsetSchedule,
     "character" : getRandomCharacter,
     "trivia" : getTrivia,
-    "weather": getWeather
+    "weather": getWeather,
+    "getsmarter" : getSmarter
 
 };
 
@@ -494,6 +495,16 @@ async function getWeather(args){
     }
 
     return {embeds: embedList};
+
+}
+
+async function getSmarter(args){
+
+    const response = await fetch("https://inspirobot.me/api?generate=true");
+
+    const image = await response.text();
+
+    return image;
 
 }
 
