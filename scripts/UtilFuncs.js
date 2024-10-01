@@ -20,7 +20,8 @@ const UtilFuncs = {
 
         date : getDateAt,
         yesterday : getYesterday,
-        getTimeDif: getTimeDifference
+        getTimeDif: getTimeDifference,
+        isEuDate: isEuropeanDate
 
     },
 
@@ -106,6 +107,14 @@ async function getDateAt(args = ["France","Lille", "dd/MM/yyyy"]){
     const response = await data.json();
     
     return response.formatted;
+
+}
+
+function isEuropeanDate(dateStr) {
+
+    const [day, month, year] = dateStr.split("/");
+
+    return !isNaN(Date.parse(month, day, year)); 
 
 }
 
