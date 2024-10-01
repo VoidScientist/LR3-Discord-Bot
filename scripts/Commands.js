@@ -17,12 +17,19 @@ const Commands = {
     "cat" : getCatUrl,
     "dog" : getDogImage,
     "crackhead" : getCrackhead,
+    "itiswhatitis" : getShrug,
     "joke": getJoke,
     "chuckfact" : getChuckFact,
     "translate": getTranslation,
     "pokemon": getPokemonEmbed ,
     "stock" : getStockRate,
-    "schedule": getSchedule
+    "schedule": getSchedule,
+    "setschedule": setSchedule,
+    "unsetschedule": unsetSchedule,
+    "character" : getRandomCharacter,
+    "trivia" : getTrivia,
+    "weather": getWeather,
+    "getsmarter" : getSmarter
 
 };
 
@@ -88,10 +95,18 @@ function getCrackhead(){
     const faces = [
         "https://media.licdn.com/dms/image/D5603AQEvSpL_oIWQoQ/profile-displayphoto-shrink_200_200/0/1697897875335?e=1715212800&v=beta&t=0dnrdFpaVr1t1sJM3YKI4CqFHvDAWmRuO6fWLAmtTic",
         "https://media.licdn.com/dms/image/D4E03AQFSGsJr7pE48g/profile-displayphoto-shrink_200_200/0/1707837249716?e=1715212800&v=beta&t=X3xOv16pcSdn4hKEbM1RmiANSeoWhYLtGYW-EhYQtmU",
-        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI"
+        "https://media.licdn.com/dms/image/D4E03AQF5lsrAlEkO8A/profile-displayphoto-shrink_200_200/0/1708981094314?e=1715212800&v=beta&t=eWGWYEfHW-6M3hwAfKtdX6o6LTWCoV8kVvfavMpj5aI",
+        "https://cdn.discordapp.com/attachments/1184200623529410611/1216769735467864094/IMG_20240311_112822.jpg?ex=6601981f&is=65ef231f&hm=753b247d360dbdecfdff2a563b91204dd5db874b7d5b4db941d33eebdf4b2cca&"
+        
     ];
 
     return UtilFuncs.rand.arrayPickRand(faces);
+
+}
+
+function getShrug(){
+
+    return '¯\\\_(ツ)\_/¯'
 
 }
 
@@ -329,6 +344,168 @@ async function getSchedule(args = "04/04/2024") {
 
 }
 
+function setSchedule(args, message){
+
+    const serverId = message.guildId;
+    const channelId = message.channelId;
+
+    const jsonFile = "./storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    data.autoScheduleChannels[serverId] = channelId;
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "This channel has been set to display the schedule."
+
+}
+
+function unsetSchedule(args, message){
+
+    const serverId = message.guildId;
+
+    const jsonFile = "./storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    delete data.autoScheduleChannels[serverId];
+
+    fs.writeFileSync(jsonFile, JSON.stringify(data));
+
+    return "This channel has been unset to display the schedule."
+}
+
+function getRandomCharacter(args){
+
+    let [name, classes, illness,_] = args.toString().split("/");
+
+    const selectedName = UtilFuncs.rand.arrayPickRand(name.split(","));
+    const selectedCLass = UtilFuncs.rand.arrayPickRand(classes.split(","));
+    const selectedIll = UtilFuncs.rand.arrayPickRand(illness.split(","));
+
+    const card = new EmbedBuilder()
+    .setColor("#9b32a8")
+    .setTitle(selectedName)
+    .setThumbnail("https://images.assetsdelivery.com/compings_v2/tarasdubov/tarasdubov2211/tarasdubov221100361.jpg")
+    .addFields(
+        {name: "Class", value: selectedCLass},
+        {name: "Illness", value: selectedIll}
+    )
+
+    return {embeds : [card]}
+
+}
+
+async function getTrivia(){
+
+    const response = await fetch("https://the-trivia-api.com/v2/questions/");
+
+    const trivia = await response.json();
+
+    if(!trivia[0].question.text) {return;}
+
+    let res;
+
+    return "**" + trivia[0].question.text + "**" + "\n" + "||" + trivia[0].correctAnswer + "||";    
+
+}
+
+async function getWeather(args){
+
+    const [location, _] = args.length === 0 ? ["Lille"] : args;
+
+    const [latitude, longitude] = await UtilFuncs.location.coordinates(location);
+
+    if(latitude === "" || longitude === ""){return "The location is not registered"}
+
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max`);
+
+    const weather = await response.json();
+
+    const weatherIconsURL = {
+        "sunny": "https://em-content.zobj.net/source/microsoft-teams/337/sun_2600-fe0f.png",
+        "sunny/cloudy": "https://em-content.zobj.net/source/microsoft/379/sun-behind-cloud_26c5.png",
+        "cloudy": "https://em-content.zobj.net/source/microsoft/379/cloud_2601-fe0f.png",
+        "sunny/rainy": "https://em-content.zobj.net/source/microsoft/379/sun-behind-rain-cloud_1f326-fe0f.png",
+        "rainy": "https://em-content.zobj.net/source/microsoft/379/cloud-with-rain_1f327-fe0f.png",
+        "thunder": "https://em-content.zobj.net/source/microsoft/379/cloud-with-lightning-and-rain_26c8-fe0f.png",
+        "snow": "https://em-content.zobj.net/source/microsoft/379/cloud-with-snow_1f328-fe0f.png",
+        "snow/rain": "https://cdn3d.iconscout.com/3d/premium/thumb/windy-weather-7814453-6267527.png?f=webp",
+        "fog": "https://cdn3d.iconscout.com/3d/premium/thumb/foggy-weather-7375366-5979320.png?f=webp",
+        "undetermined": "https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-3d/512/Red-Question-Mark-3d-icon.png"
+    }
+
+    const embedList = [];
+
+    for (let i = 0; i<weather.daily.time.length; i++){
+        
+        const code = weather.daily.weather_code[i];
+
+        let icon = "";
+
+        if (code == 0){
+            icon = weatherIconsURL["sunny"];
+        }
+        else if ([1, 2].includes(code)){
+            icon = weatherIconsURL["sunny/cloudy"];
+        }
+        else if (code === 3) {
+            icon = weatherIconsURL["cloudy"];
+        }
+        else if ([45, 48].includes(code)){
+            icon = weatherIconsURL["fog"];
+        }
+        else if ([51, 53, 55].includes(code)){
+            icon = weatherIconsURL["sunny/rainy"];
+        }
+        else if ([61, 63, 65, 80, 81, 82].includes(code)){
+            icon = weatherIconsURL["rainy"];
+        }
+        else if ([56, 57, 66, 67].includes(code)){
+            icon = weatherIconsURL["snow/rain"];
+        }
+        else if ([71, 73, 75, 77, 85, 86].includes(code)){
+            icon = weatherIconsURL["snow"];
+        }
+        else if ([95, 96, 99].includes(code)){
+            icon = weatherIconsURL["thunder"];
+        }
+        else {
+            icon = weatherIconsURL["undetermined"];
+        }
+
+        const weatherEmbed = new EmbedBuilder()
+        .setColor(0x34aeeb)
+        .setThumbnail(icon)
+        .setTitle(`Weather at ${location} on the ${weather.daily.time[i]}`)
+        .addFields(
+            {name: "Maximal temperature", value: weather.daily.temperature_2m_max[i].toString()},
+            {name: "Minimal temperature", value: weather.daily.temperature_2m_min[i].toString()},
+            {name: "Max precipitation probability", value: `${weather.daily.precipitation_probability_max[i]}%`},
+            {name: "Weather code", value: code.toString()}
+        );
+        
+        embedList.push(weatherEmbed);
+
+    }
+
+    return {embeds: embedList};
+
+}
+
+async function getSmarter(args){
+
+    const response = await fetch("https://inspirobot.me/api?generate=true");
+
+    const image = await response.text();
+
+    return image;
+
+}
+
 export default Commands;
-
-

@@ -22,6 +22,10 @@ const UtilFuncs = {
         yesterday : getYesterday,
         getTimeDif: getTimeDifference
 
+    },
+
+    location: {
+        coordinates: getCoordinates,
     }
 
 };
@@ -100,24 +104,16 @@ async function getDateAt(args = ["France","Lille", "dd/MM/yyyy"]){
     const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
     
     const response = await data.json();
-
+    
     return response.formatted;
 
 }
 
-async function getTimeDifference(args = ["France","Lille", "dd/MM/yyyy"]){
+function getTimeDifference(){
 
-    let [country, city, format, _] = args;
-
-    if (!city || !country) {return;}
-
-    const data = await fetch(`https://tools.aimylogic.com/api/now?tz=${country}/${city}&format=${format}`);
-    
-    const response = await data.json();
-    
     let date = new Date();
 
-    return response.hour - date.getHours();
+    return date.getUTCHours() - date.getHours();
 
 }
 
@@ -183,6 +179,18 @@ async function getEventsFromIcs(file) {
     }
 
     return events;
+}
+
+async function getCoordinates(location){
+
+    const response  = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
+
+    const data = await response.json();
+
+    if(data.hasOwnProperty("results")){return [data.results[0].latitude, data.results[0].longitude];}
+
+    return ["",""];
+
 }
 
 
