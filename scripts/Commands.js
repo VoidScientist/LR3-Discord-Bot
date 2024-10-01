@@ -1,5 +1,5 @@
 import UtilFuncs from "./UtilFuncs.js";
-import { EmbedBuilder, formatEmoji } from "discord.js";
+import { EmbedBuilder, formatEmoji, ActionRowBuilder,ButtonBuilder, ButtonStyle} from "discord.js";
 import * as fs from "fs";
 import { PokeCard } from "../pokemonCardGame/PokeCard.js";
 
@@ -233,7 +233,7 @@ async function getPokemonEmbed(args) {
 
     try {
 
-        pokemonData = await pokemon.json()
+        pokemonData = await pokemon.json();
 
     } catch(err) {
 
@@ -293,18 +293,8 @@ async function getSchedule(args = "04/04/2024") {
     
     const [date, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
 
-    if (date.length !== 10){return "Please enter the date in dd/mm/yyyy format";}
+    if (!UtilFuncs.time.isEuDate(date)) return "Please, enter date in format: dd/mm/yyyy";
     
-    for (let i = 0; i < date.length; i++){
-
-        if (!((["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(date[i]) && !(i === 2 || i === 5)) || ((i === 2 || i === 5) && date[i] === "/" ))){
-
-            return "Please enter the date in dd/mm/yyyy format";
-            
-        }
-
-    }
-
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
 
     const icsFile = await response.text();
@@ -318,16 +308,18 @@ async function getSchedule(args = "04/04/2024") {
     for(let event of schedule) {
 
         if(event.date.dateFr === date) {
+
+            const start = event.start.hour + ":" + event.start.minutes;
+            const end = event.end.hour + ":" + event.end.minutes;
+            const date = "(" + event.date.dateFr + ")";
             
             const eventEmbed = new EmbedBuilder()
             .setColor(0xed7f10)
-            .setTitle(event.subject)
+            .setTitle(event.subject.split(" - ")[1])
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
-                {name: "Starts at", value: event.start.hour + "h" + event.start.minutes},
-                {name: "Ends at", value: event.end.hour + "h" + event.end.minutes},
-                {name: "Location", value: event.location === '' ? "No location provided" : event.location},
-                {name: "Date", value: event.date.dateFr}
+                {name: "Time:", value: start + " - " + end + " " + date},
+                {name: "Room:", value: event.location === '' ? "N/A" : event.location},
             );
 
             Embeds.push(eventEmbed);
@@ -340,7 +332,12 @@ async function getSchedule(args = "04/04/2024") {
         return "No events scheduled on " + date;
     }
 
-    return {embeds: Embeds};
+    // EXPERIMENTAL CONTENT (current system doesn't allow for it to work)
+
+    // const leftButton = new ButtonBuilder().setCustomId("left").setStyle(ButtonStyle.Primary).setEmoji("👈");
+    // const rightButton = new ButtonBuilder().setCustomId("right").setStyle(ButtonStyle.Primary).setEmoji("👉");
+
+    return {embeds: Embeds, /*components: [new ActionRowBuilder().addComponents(leftButton, rightButton)]*/};
 
 }
 
