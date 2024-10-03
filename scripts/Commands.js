@@ -175,10 +175,9 @@ async function getJoke(){
 async function getChuckFact(){
 
     const response = await fetch("https://api.chucknorris.io/jokes/random");
-
     const fact = await response.json();
 
-    if (fact.error === true) {return;}
+    if (fact.error === true) return;
 
     return fact.value;
 
@@ -420,8 +419,8 @@ async function getWeather(args){
 
     if(latitude === "" || longitude === ""){return "The location is not registered"}
 
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max`);
-
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_probability_max&timezone=auto`);
+                                 
     const weather = await response.json();
 
     const weatherIconsURL = {
@@ -440,6 +439,10 @@ async function getWeather(args){
     const embedList = [];
 
     for (let i = 0; i<weather.daily.time.length; i++){
+
+        const date = new Date(weather.daily.time[i]);
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         
         const code = weather.daily.weather_code[i];
 
@@ -476,15 +479,20 @@ async function getWeather(args){
             icon = weatherIconsURL["undetermined"];
         }
 
+        const sunset = weather.daily.sunset[i].split("T")[1];
+        const sunrise = weather.daily.sunrise[i].split("T")[1];
+
         const weatherEmbed = new EmbedBuilder()
         .setColor(0x34aeeb)
         .setThumbnail(icon)
-        .setTitle(`Weather at ${location} on the ${weather.daily.time[i]}`)
+        .setTitle(`Weather at ${location} on the ${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`)
         .addFields(
-            {name: "Maximal temperature", value: weather.daily.temperature_2m_max[i].toString()},
-            {name: "Minimal temperature", value: weather.daily.temperature_2m_min[i].toString()},
-            {name: "Max precipitation probability", value: `${weather.daily.precipitation_probability_max[i]}%`},
-            {name: "Weather code", value: code.toString()}
+            {name: "🌡️ Min/max:", value: weather.daily.temperature_2m_min[i].toString() + "/" + weather.daily.temperature_2m_max[i].toString() + "°C", inline: true},
+            {name: "🌧️ Rain prob:", value: `${weather.daily.precipitation_probability_max[i]}%`, inline: true},
+            {name: "☀️ UV Index", value: weather.daily.uv_index_max[i].toString(), inline: true},
+            {name: "🌅 Sunrise:", value: sunrise, inline: true},
+            {name: "🌇 Sunset:", value: sunset, inline: true},
+            {name: "Weather code:", value: code.toString(), inline: true}
         );
         
         embedList.push(weatherEmbed);

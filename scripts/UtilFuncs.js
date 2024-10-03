@@ -155,9 +155,9 @@ async function getEventsFromIcs(file) {
                 location: "",
                 date: {},
                 start: {},
-                 end:{}
-                };
-            } 
+                end:{}
+            };
+        } 
 
         else if (line == 'END:VEVENT\r') { events.push(event); }
 
