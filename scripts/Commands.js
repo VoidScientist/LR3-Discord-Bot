@@ -316,8 +316,8 @@ async function getSchedule(args = "04/04/2024") {
             .setTitle(event.subject.split(" - ")[1])
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
-                {name: "Time:", value: start + " - " + end + " " + date},
-                {name: "Room:", value: event.location === '' ? "N/A" : event.location},
+                {name: "🕓  Time:", value: start + " - " + end + " " + date},
+                {name: "📍 Room:", value: event.location === '' ? "N/A" : event.location},
             );
 
             Embeds.push(eventEmbed);
