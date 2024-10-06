@@ -122,7 +122,9 @@ function getTimeDifference(){
 
     let date = new Date();
 
-    return date.getUTCHours() - date.getHours();
+    //return date.getUTCHours() - date.getHours();
+    return 2;
+    //TODO:Repair this fucking function
 
 }
 
