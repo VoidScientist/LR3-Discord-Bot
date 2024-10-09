@@ -161,9 +161,9 @@ async function getEventsFromIcs(file) {
             };
         } 
 
-        else if (line == 'END:VEVENT\r') { events.push(event); }
+        else if (line == 'END:VEVENT\r') { events.push(event);}
 
-        else if (line.includes("SUMMARY")) { event.subject = line.slice(8, line.length-1); }
+        else if (line.includes("SUMMARY")) { event.subject = line.slice(8, line.length-1);}
 
         else if (line.includes("LOCATION")) {
             event.location = (line.slice(9, line.length-1)).replaceAll("\\n", " ");

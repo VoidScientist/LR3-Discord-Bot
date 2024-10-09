@@ -310,10 +310,17 @@ async function getSchedule(args = "04/04/2024") {
             const start = event.start.hour + ":" + event.start.minutes;
             const end = event.end.hour + ":" + event.end.minutes;
             const date = "(" + event.date.dateFr + ")";
-            
+            let lessonName = "";
+            if(event.subject.includes("Anglophone - ")){
+                lessonName = event.subject.split(" - ")[1];
+            }
+            else {
+                lessonName = event.subject;
+            }
+
             const eventEmbed = new EmbedBuilder()
             .setColor(0xed7f10)
-            .setTitle(event.subject.split(" - ")[1])
+            .setTitle(lessonName)
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
                 {name: "🕓  Time:", value: start + " - " + end + " " + date},
@@ -334,7 +341,7 @@ async function getSchedule(args = "04/04/2024") {
 
     // const leftButton = new ButtonBuilder().setCustomId("left").setStyle(ButtonStyle.Primary).setEmoji("👈");
     // const rightButton = new ButtonBuilder().setCustomId("right").setStyle(ButtonStyle.Primary).setEmoji("👉");
-
+    
     return {embeds: Embeds, /*components: [new ActionRowBuilder().addComponents(leftButton, rightButton)]*/};
 
 }

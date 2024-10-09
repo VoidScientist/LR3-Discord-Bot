@@ -62,7 +62,7 @@ async function autoSchedule(){
     
     const date = new Date();
 
-    if (date.getHours() != 6){return;}
+    if (date.getHours() != 5 || date.getMinutes() >= 30) return;
 
     const jsonFile = "storage.json";
 
@@ -90,4 +90,6 @@ async function autoSchedule(){
 
 client.on(Events.MessageCreate, handleMessage);
 client.once(Events.ClientReady, onClientReady);
-setInterval(autoSchedule, 3600000);
+setInterval(autoSchedule, 1800000);
+
+export default client;
