@@ -311,20 +311,29 @@ async function getSchedule(args = "04/04/2024") {
             const end = event.end.hour + ":" + event.end.minutes;
             const date = "(" + event.date.dateFr + ")";
             let lessonName = "";
-            if(event.subject.includes("Anglophone - ")){
-                lessonName = event.subject.split(" - ")[1];
+            let type = "";
+            let color = 0;
+            const colors = {"default":0xa0a0a0, "Travaux pratiques": 0xffa726, "Cours Magistral": 0x66bb6a, "Travaux dirigés": 0x7e57c2}
+            
+            if(event.subject.includes(" Anglophone - ")){
+                const lesson = event.subject.split(" Anglophone - ");
+                type = lesson[0];
+                lessonName = lesson[1];
+                color = colors[type] != undefined ? colors[type] : colors["default"];
             }
             else {
                 lessonName = event.subject;
+                color = colors["default"];
             }
-
+            
             const eventEmbed = new EmbedBuilder()
-            .setColor(0xed7f10)
+            .setColor(color)
             .setTitle(lessonName)
             .setThumbnail("https://campuschartrons-bordeaux.com/wp-content/uploads/2023/10/Logo-ESME-Bordeaux.webp")
             .addFields(
                 {name: "🕓  Time:", value: start + " - " + end + " " + date},
                 {name: "📍 Room:", value: event.location === '' ? "N/A" : event.location},
+                {name: "📖  Type:", value: type === "" ? "Other" : type}
             );
 
             Embeds.push(eventEmbed);
