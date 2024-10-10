@@ -313,7 +313,12 @@ async function getSchedule(args = "04/04/2024") {
             let lessonName = "";
             let type = "";
             let color = 0;
-            const colors = {"default":0xa0a0a0, "Travaux pratiques": 0xffa726, "Cours Magistral": 0x66bb6a, "Travaux dirigés": 0x7e57c2}
+            const colors = {
+                "default":0xa0a0a0, 
+                "Travaux pratiques": 0xffa726, 
+                "Cours Magistral": 0x66bb6a, 
+                "Travaux dirigés": 0x7e57c2
+            }
             
             if(event.subject.includes(" Anglophone - ")){
                 const lesson = event.subject.split(" Anglophone - ");
