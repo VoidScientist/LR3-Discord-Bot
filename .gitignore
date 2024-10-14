@@ -126,3 +126,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 config.json
+/experimental-api-thingie
+experimental.js
+experimental2.js

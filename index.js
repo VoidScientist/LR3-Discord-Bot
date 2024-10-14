@@ -1,46 +1,95 @@
-import { Client, Message, MessageReaction, Typing } from 'discord.js';
-import CONFIG from './config.json' with { type: "json"};
+import { ActivityType, Client, Events, GatewayIntentBits } from 'discord.js';
+import CONFIG from './config.json' with {type: "json"};
+import Commands from './scripts/Commands.js';
+import * as fs from "fs";
 
-const TYPING_THRESHOLD = 1000;
-const TYPING_OFFSET = 1;
-const TYPING_EVENT_TRIGGER_TIME = 8;
-
-const client = new Client( { intents: ["Guilds", "GuildMessages", "GuildMessageTyping", "MessageContent"] } );
-
-let typingUsers = {};
 let self = -1;
 
-client.login(CONFIG.token)
+const client = new Client( 
+    {
+        intents: 
+        [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.MessageContent,
+            GatewayIntentBits.GuildMessages
+        ]
+    } 
+);
 
-function onTyping(typing) {
-    const text = `${typing.member.displayName} is typing at ${typing.startedAt.toTimeString()}`;
-    const typeStart = typingUsers[typing.user.id];
+client.login(CONFIG.token);
 
-    console.log((typing.startedAt - typeStart)/1000)
+function onClientReady(client) {
 
-    const duration = (typing.startedAt - typeStart)/1000 
-    if (duration % TYPING_EVENT_TRIGGER_TIME === 0 && duration < TYPING_THRESHOLD) {
-        return;   
+    console.log("Bot is ready!");
+
+    self = client.user.id;
+
+    client.user.setPresence(
+        {
+            activities: [{name: "🤖 AM AWAKE 🤖", type: ActivityType.Custom}],
+            status: "online"
+        }
+     );
+
+}
+
+async function handleMessage(message) {
+
+    if (message.content[0] !== "!") {return;}
+    
+    let parsed = message.content.split(" ");
+
+    let identifier = parsed[0].slice(1).toLowerCase();
+
+    let args = parsed.slice(1);
+
+    let func = Commands[identifier];
+
+    if (!func) {
+        message.reply(`"!${identifier}" command does not exist.`);
+        return;
+    }
+
+    message.channel.send(await func(args, message));
+
+    message.delete(1000);
+    
+}
+
+//TODO:Check that the bot can still access the channel he needs to send the schedule
+
+async function autoSchedule(){
+    
+    const date = new Date();
+
+    if (date.getHours() != 5 || date.getMinutes() >= 30) return;
+
+    const jsonFile = "storage.json";
+
+    const jsonData = fs.readFileSync(jsonFile);
+
+    const data = JSON.parse(jsonData);
+
+    for (let guildId in data.autoScheduleChannels){
+
+        const guild = client.guilds.cache.get(guildId);
+
+        if (guild == undefined){return;}
+        
+        const channel = guild.channels.cache.get(data.autoScheduleChannels[guildId]);
+
+        if (channel == undefined){return;}
+
+        let embedList = await Commands["schedule"]([])
+
+        channel.send(embedList);
+
     }
     
-    typingUsers[typing.user.id] = typing.startedAt
-
-    console.log(text);
 }
 
+client.on(Events.MessageCreate, handleMessage);
+client.once(Events.ClientReady, onClientReady);
+setInterval(autoSchedule, 1800000);
 
-
-function typingEnd(message) {
-    const author = message.author;
-    const start = typingUsers[author.id];
-    const end = message.createdAt;
-    const duration = (end-start)/1000;
-
-    const userName = author.displayName;
-    message.reply(`It took you around ${duration + TYPING_OFFSET} seconds to write your disgusting opnion, you could've touched grass instead !!!`);
-
-}
-
-
-client.on('typingStart', onTyping)
-client.on("messageCreate", typingEnd)
+export default client;
