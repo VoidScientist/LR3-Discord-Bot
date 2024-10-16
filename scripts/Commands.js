@@ -524,12 +524,22 @@ async function getWeather(args){
 }
 
 async function getSmarter(args){
+    
+    let [nIteration, _] = args.length === 0 ? [1] : args;
+    nIteration = nIteration>5 ? 5 : nIteration;
 
-    const response = await fetch("https://inspirobot.me/api?generate=true");
+    let images = [];
 
-    const image = await response.text();
+    for (let i = 0; i<nIteration; i++){
 
-    return image;
+        const response = await fetch("https://inspirobot.me/api?generate=true");
+
+        images += await response.text();
+        images += "\n"
+
+    }
+    
+    return images;
 
 }
 
