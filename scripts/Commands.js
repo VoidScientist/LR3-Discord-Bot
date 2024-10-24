@@ -319,21 +319,10 @@ async function getSchedule(args = "04/04/2024") {
                 "Cours Magistral": 0x66bb6a, 
                 "Travaux dirigés": 0x7e57c2
             }
-            
-            if(event.subject.includes(" Anglophone_G1 - ")){
-                const lesson = event.subject.split(" Anglophone_G1 - ");
-                type = lesson[0];
-                lessonName = lesson[1];
-                color = colors[type] != undefined ? colors[type] : colors["default"];
-            }
-            else if(event.subject.includes(" Anglophone_G2 - ")){
-                const lesson = event.subject.split(" Anglophone_G2 - ");
-                type = lesson[0];
-                lessonName = lesson[1];
-                color = colors[type] != undefined ? colors[type] : colors["default"];
-            }
-            else if(event.subject.includes(" Anglophone - ")){
-                const lesson = event.subject.split(" Anglophone - ");
+            const reg = / Anglophone[ _]?G?[12]? ?- /
+
+            if(event.subject.match(reg) !== null){
+                const lesson = event.subject.split(reg);
                 type = lesson[0];
                 lessonName = lesson[1];
                 color = colors[type] != undefined ? colors[type] : colors["default"];
