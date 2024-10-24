@@ -323,21 +323,18 @@ async function getSchedule(args = "04/04/2024") {
             if(event.subject.includes(" Anglophone_G1 - ")){
                 const lesson = event.subject.split(" Anglophone_G1 - ");
                 type = lesson[0];
-                console.log(type);
                 lessonName = lesson[1];
                 color = colors[type] != undefined ? colors[type] : colors["default"];
             }
             else if(event.subject.includes(" Anglophone_G2 - ")){
                 const lesson = event.subject.split(" Anglophone_G2 - ");
                 type = lesson[0];
-                console.log(type);
                 lessonName = lesson[1];
                 color = colors[type] != undefined ? colors[type] : colors["default"];
             }
             else if(event.subject.includes(" Anglophone - ")){
                 const lesson = event.subject.split(" Anglophone - ");
                 type = lesson[0];
-                console.log(type);
                 lessonName = lesson[1];
                 color = colors[type] != undefined ? colors[type] : colors["default"];
             }
