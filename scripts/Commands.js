@@ -287,11 +287,20 @@ async function getStockRate(args){
 
 }
 
-async function getSchedule(args = "04/04/2024") {
+async function getSchedule(args) {
     
-    const [date, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
+    let [date, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
 
-    if (!UtilFuncs.time.isEuDate(date)) return "Please, enter date in format: dd/mm/yyyy";
+    if (date == "tmrw"){
+        let tomorrow = new Date(new Date().getTime() + 1000*3600*24);
+
+        let day = tomorrow.getDate().toString().padStart(2, "0");
+        let month = (tomorrow.getMonth()+1).toString().padStart(2, "0");
+        let year = tomorrow.getFullYear();
+        
+        date = day + "/" + month + "/" + year;
+    }
+    else if (!UtilFuncs.time.isEuDate(date)) return "Please, enter date in format: dd/mm/yyyy";
     
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
 
@@ -317,15 +326,21 @@ async function getSchedule(args = "04/04/2024") {
                 "default":0xa0a0a0, 
                 "Travaux pratiques": 0xffa726, 
                 "Cours Magistral": 0x66bb6a, 
-                "Travaux dirigés": 0x7e57c2
+                "Travaux dirigés": 0x7e57c2,
+                "EXAM": 0xff5252
             }
-            const reg = / Anglophone[ _]?G?[12]? ?- /
+            const reg = / Anglophone[ _]?G?[12]? - /;
 
             if(event.subject.match(reg) !== null){
                 const lesson = event.subject.split(reg);
                 type = lesson[0];
                 lessonName = lesson[1];
                 color = colors[type] != undefined ? colors[type] : colors["default"];
+            }
+            else if(event.subject.includes("EXAM")){
+                type = "Examen";
+                lessonName = event.subject;
+                color = colors["EXAM"];
             }
             else {
                 lessonName = event.subject;

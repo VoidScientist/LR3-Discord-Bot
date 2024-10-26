@@ -82,7 +82,7 @@ async function autoSchedule(){
 
         let embedList = await Commands["schedule"]([])
 
-        channel.send(embedList);
+        if(typeof(embedList) != "string") channel.send(embedList);
 
     }
     
