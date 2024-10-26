@@ -289,10 +289,14 @@ async function getStockRate(args){
 
 async function getSchedule(args) {
     
-    let [date, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
+    let [date, nextDays, _] = args.length === 0 ? [await UtilFuncs.time.date()] : args;
+
+
 
     if (date == "tmrw"){
-        let tomorrow = new Date(new Date().getTime() + 1000*3600*24);
+        if(nextDays === undefined) nextDays = 1;
+
+        let tomorrow = new Date(new Date().getTime() + 1000*3600*24*nextDays);
 
         let day = tomorrow.getDate().toString().padStart(2, "0");
         let month = (tomorrow.getMonth()+1).toString().padStart(2, "0");
