@@ -21,7 +21,8 @@ const UtilFuncs = {
         date : getDateAt,
         yesterday : getYesterday,
         getTimeDif: getTimeDifference,
-        isEuDate: isEuropeanDate
+        isEuDate: isEuropeanDate,
+        getTimezone: findFrenchTimezone
 
     },
 
@@ -118,14 +119,8 @@ function isEuropeanDate(dateStr) {
 
 }
 
-function getTimeDifference(){
-
-    let date = new Date();
-
-    //return date.getUTCHours() - date.getHours();
-    return -2;
-    //TODO:Repair this fucking function
-
+function getTimeDifference(date){
+    return -findFrenchTimezone(date);
 }
 
 function getYesterday(){
@@ -142,12 +137,26 @@ function getYesterday(){
 
 }
 
+function findFrenchTimezone(args){
+    let date = args === undefined ? new Date() : new Date(args);
+    let month = date.getMonth();
+    if (month == 2 || month == 9){
+        let firstToLastSunday = {1:29, 2:30, 3:31, 4:25, 5:26, 6:27, 7:28};
+        let firstSunday = (date.getDate()+7-date.getDay())%7;
+        let lastSunday = firstToLastSunday[firstSunday];
+        return date.getDate() < lastSunday ? [1,2][+(month == 9)] : [2,1][+(month == 9)];
+    }
+    if ([0,1,10,11].includes(month)){
+        return 1;
+    }
+    return 2;
+}
+
 // TODO: too much slicing, make it clearer.
 async function getEventsFromIcs(file) {
 
     const events = []; 
     let event = {};
-    const timeDifference = await getTimeDifference();
 
     for (let line of file){
 
@@ -170,11 +179,8 @@ async function getEventsFromIcs(file) {
         }
 
         else if (line.includes("DTSTART")) {
-
-            event.date.year = line.slice(8,12);
-            event.date.month = line.slice(12, 14);
-            event.date.day = line.slice(14,16);
-            event.date.dateFr = event.date.day + "/" + line.slice(12, 14) + "/" + line.slice(8,12);
+            
+            const timeDifference = getTimeDifference(new Date(event.date.year, event.date.month-1, event.date.day));
             event.start.hour = (line.slice(17,19) - timeDifference).toString();
             event.start.minutes = line.slice(19,21);
 
@@ -182,6 +188,11 @@ async function getEventsFromIcs(file) {
 
         else if (line.includes("DTEND")) {
 
+            event.date.year = line.slice(6,10);
+            event.date.month = line.slice(10, 12);
+            event.date.day = line.slice(12,14);
+            event.date.dateFr = event.date.day + "/" + event.date.month + "/" + event.date.year;
+            const timeDifference = getTimeDifference(new Date(event.date.year, event.date.month-1, event.date.day));
             event.end.hour = (line.slice(15,17) - timeDifference).toString();
             event.end.minutes = line.slice(17,19);
 
