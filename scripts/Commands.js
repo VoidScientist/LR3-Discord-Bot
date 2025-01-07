@@ -305,6 +305,10 @@ async function getSchedule(args) {
         date = day + "/" + month + "/" + year;
     }
     else if (!UtilFuncs.time.isEuDate(date)) return "Please, enter date in format: dd/mm/yyyy";
+    const [day, month, year] = date.split("/");
+    if(day.length == 1) date = "0" + date;
+    if(month.length == 1) date = date.slice(0,3) + "0" + date.slice(3);
+    if(year.length == 2) date = date.slice(0,6) + "20" + date.slice(6);
     
     const response = await fetch("https://connecteur.alcuin.com/ADS/ESME.mvc/api/ics/4391a35b-ae5b-4062-9091-40575b66dc0c");
 
